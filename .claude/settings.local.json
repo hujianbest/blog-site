@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(*)"
+    ]
+  },
+  "enabledPlugins": {
+    "harness-flow@hujianbest-harness-flow": true
+  }
+}
