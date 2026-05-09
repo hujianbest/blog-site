@@ -4,6 +4,8 @@ import dotenv from 'dotenv'
 import { logger } from './utils/logger'
 import { errorHandler } from './middleware/errorHandler'
 import healthRouter from './health/health.controller'
+import authRouter from './modules/auth/auth.controller'
+import articlesRouter from './modules/content/articles.controller'
 
 dotenv.config()
 
@@ -23,6 +25,8 @@ app.use((req, res, next) => {
 
 // Routes
 app.use('/health', healthRouter)
+app.use('/api/v1/auth', authRouter)
+app.use('/api/v1/articles', articlesRouter)
 
 // Error handling
 app.use(errorHandler)
