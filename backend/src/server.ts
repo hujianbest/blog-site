@@ -6,6 +6,8 @@ import { errorHandler } from './middleware/errorHandler'
 import healthRouter from './health/health.controller'
 import authRouter from './modules/auth/auth.controller'
 import articlesRouter from './modules/content/articles.controller'
+import tagsRouter from './modules/content/tags.controller'
+import categoriesRouter from './modules/content/categories.controller'
 
 dotenv.config()
 
@@ -27,6 +29,8 @@ app.use((req, res, next) => {
 app.use('/health', healthRouter)
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/articles', articlesRouter)
+app.use('/api/v1/tags', tagsRouter)
+app.use('/api/v1/categories', categoriesRouter)
 
 // Error handling
 app.use(errorHandler)

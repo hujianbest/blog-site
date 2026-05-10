@@ -7,14 +7,20 @@
 ## Feature Metadata
 
 - **ID**: 001-personal-writing-platform
-- **Status**: 规格草稿
+- **Status**: 开发中 (8/30 任务完成, 27%)
 - **Created**: 2026-05-08
 - **Profile**: full
+- **Current Stage**: hf-workflow-router
+- **Latest Closeout**: TASK-008 (2026-05-10)
 
 ## Quick Links
 
 - [需求规格](spec.md)
+- [技术设计](design.md)
+- [UI设计](ui-design.md)
+- [任务计划](tasks.md)
 - [进度追踪](progress.md)
+- [TASK-008 Closeout](closeout.md) | [HTML Report](closeout.html)
 
 ## Key Features
 

@@ -71,10 +71,10 @@ docker-compose up -d
 
 ## 🎯 当前进度
 
-**已完成**: 7/30 任务 (23%)  
-**当前里程碑**: Milestone 2 - 核心写作功能（部分完成）
+**已完成**: 8/30 任务 (27%)  
+**当前里程碑**: Milestone 2 - 核心写作功能（43%）
 
-详见: [项目总结](docs/PROJECT_SUMMARY.md)
+详见: [项目总结](docs/PROJECT_SUMMARY.md) | [进度追踪](features/001-personal-writing-platform/progress.md)
 
 ---
 

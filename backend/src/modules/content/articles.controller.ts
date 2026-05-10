@@ -1,6 +1,7 @@
 import { Router, Response } from 'express'
 import { requireAuth } from '../../middleware/auth'
 import { prisma } from '../../database/prisma'
+import { logger } from '../../utils/logger'
 
 const router = Router()
 
@@ -10,8 +11,47 @@ router.use(requireAuth)
 // Get all articles
 router.get('/', async (req: any, res: Response) => {
   try {
+    const { tag, category, status } = req.query;
+
+    // Build where clause
+    const where: any = { authorId: req.userId };
+
+    // Filter by status if provided
+    if (status) {
+      where.status = status;
+    }
+
+    // Filter by category if provided
+    if (category) {
+      // Validate category ID format
+      try {
+        where.categoryId = category as string;
+      } catch (error) {
+        return res.status(400).json({
+          error: {
+            message: 'Invalid category ID format',
+          },
+        });
+      }
+    }
+
+    // Filter by tag if provided
+    if (tag) {
+      const tagName = tag as string;
+      where.tags = {
+        some: {
+          tag: {
+            name: {
+              equals: tagName,
+              mode: 'insensitive', // Case-insensitive search
+            },
+          },
+        },
+      };
+    }
+
     const articles = await prisma.article.findMany({
-      where: { authorId: req.userId },
+      where,
       include: {
         category: true,
         tags: {
@@ -21,15 +61,16 @@ router.get('/', async (req: any, res: Response) => {
         },
       },
       orderBy: { createdAt: 'desc' },
-    })
+    });
 
-    res.json({ articles })
+    res.json({ articles });
   } catch (error) {
+    logger.error('Error fetching articles:', error);
     res.status(500).json({
       error: {
         message: 'Failed to fetch articles',
       },
-    })
+    });
   }
 })
 
@@ -105,8 +146,9 @@ router.post('/', async (req: any, res: Response) => {
 // Update article
 router.put('/:id', async (req: any, res: Response) => {
   try {
-    const { title, content, categoryId, status, version } = req.body
+    const { title, content, categoryId, status, version, tagIds } = req.body;
 
+    // Update article basic fields
     const article = await prisma.article.update({
       where: {
         id: req.params.id,
@@ -119,15 +161,47 @@ router.put('/:id', async (req: any, res: Response) => {
         ...(status && { status }),
         ...(version && { version: { increment: 1 } }),
       },
-    })
+    });
 
-    res.json({ article })
+    // Update tag associations if provided
+    if (tagIds !== undefined) {
+      // Delete existing tag associations
+      await prisma.articleTag.deleteMany({
+        where: { articleId: req.params.id },
+      });
+
+      // Create new tag associations if tagIds is not empty
+      if (tagIds.length > 0) {
+        await prisma.articleTag.createMany({
+          data: tagIds.map((tagId: string) => ({
+            articleId: req.params.id,
+            tagId,
+          })),
+        });
+      }
+    }
+
+    // Fetch updated article with tags
+    const updatedArticle = await prisma.article.findUnique({
+      where: { id: req.params.id },
+      include: {
+        category: true,
+        tags: {
+          include: {
+            tag: true,
+          },
+        },
+      },
+    });
+
+    res.json({ article: updatedArticle });
   } catch (error) {
+    logger.error('Error updating article:', error);
     res.status(500).json({
       error: {
         message: 'Failed to update article',
       },
-    })
+    });
   }
 })
 
