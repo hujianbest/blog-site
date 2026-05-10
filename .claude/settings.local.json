@@ -4,7 +4,5 @@
       "Bash(*)"
     ]
   },
-  "enabledPlugins": {
-    "harness-flow@hujianbest-harness-flow": true
-  }
+  "enabledPlugins": {}
 }

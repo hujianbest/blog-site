@@ -5,8 +5,8 @@ import { buildCategoryTree } from '../modules/content/categories.controller';
 describe('Category Tree Builder', () => {
   it('should build a flat category tree correctly', () => {
     const categories = [
-      { id: '1', name: 'Tech', parentId: null },
-      { id: '2', name: 'Lifestyle', parentId: null },
+      { id: '1', name: 'Tech', parentId: null, createdAt: new Date(), _count: { articles: 0 } },
+      { id: '2', name: 'Lifestyle', parentId: null, createdAt: new Date(), _count: { articles: 0 } },
     ];
 
     const tree = buildCategoryTree(categories);
@@ -18,10 +18,10 @@ describe('Category Tree Builder', () => {
 
   it('should build a hierarchical category tree correctly', () => {
     const categories = [
-      { id: '1', name: 'Tech', parentId: null },
-      { id: '2', name: 'Programming', parentId: '1' },
-      { id: '3', name: 'JavaScript', parentId: '2' },
-      { id: '4', name: 'Lifestyle', parentId: null },
+      { id: '1', name: 'Tech', parentId: null, createdAt: new Date(), _count: { articles: 0 } },
+      { id: '2', name: 'Programming', parentId: '1', createdAt: new Date(), _count: { articles: 0 } },
+      { id: '3', name: 'JavaScript', parentId: '2', createdAt: new Date(), _count: { articles: 0 } },
+      { id: '4', name: 'Lifestyle', parentId: null, createdAt: new Date(), _count: { articles: 0 } },
     ];
 
     const tree = buildCategoryTree(categories);
@@ -29,8 +29,8 @@ describe('Category Tree Builder', () => {
     expect(tree).toHaveLength(2);
     expect(tree[0].name).toBe('Tech');
     expect(tree[0].children).toHaveLength(1);
-    expect(tree[0].children[0].name).toBe('Programming');
-    expect(tree[0].children[0].children[0].name).toBe('JavaScript');
+    expect(tree[0].children?.[0]?.name).toBe('Programming');
+    expect(tree[0].children?.[0]?.children?.[0]?.name).toBe('JavaScript');
     expect(tree[1].name).toBe('Lifestyle');
     expect(tree[1].children).toHaveLength(0);
   });

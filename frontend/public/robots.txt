@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Disallow specific routes if needed
+# Disallow: /admin
+# Disallow: /api
+
+# Sitemap location
+Sitemap: https://example.com/sitemap.xml

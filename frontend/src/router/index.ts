@@ -22,6 +22,31 @@ const routes: Array<RouteRecordRaw> = [
     name: 'register',
     component: () => import('../views/Register.vue'),
   },
+  {
+    path: '/articles',
+    name: 'articles',
+    component: () => import('../views/ArticleList.vue'),
+  },
+  {
+    path: '/articles/:id',
+    name: 'article-detail',
+    component: () => import('../views/ArticleDetail.vue'),
+  },
+  {
+    path: '/categories',
+    name: 'categories',
+    component: () => import('../views/CategoryArchive.vue'),
+  },
+  {
+    path: '/categories/:id',
+    name: 'category-detail',
+    component: () => import('../views/CategoryDetail.vue'),
+  },
+  {
+    path: '/tags/:name',
+    name: 'tag-detail',
+    component: () => import('../views/TagDetail.vue'),
+  },
 ]
 
 const router = createRouter({

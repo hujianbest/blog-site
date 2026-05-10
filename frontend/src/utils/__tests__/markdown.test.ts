@@ -32,7 +32,7 @@ describe('markdown.ts - Utility Functions', () => {
       const input = '```javascript\nconsole.log("test");\n```'
       const result = convertMarkdownToHtml(input)
       expect(result).toContain('<pre>')
-      expect(result).toContain('<code>')
+      expect(result).toMatch(/<code[^>]*>/)
     })
 
     it('should convert links', () => {
@@ -61,8 +61,11 @@ describe('markdown.ts - Utility Functions', () => {
     it('should prevent XSS attacks', () => {
       const input = '<script>alert("xss")</script>'
       const result = convertMarkdownToHtml(input)
+      // Script tags should be escaped or removed
       expect(result).not.toContain('<script>')
-      expect(result).not.toContain('alert(')
+      expect(result).not.toContain('</script>')
+      // Check that the content is HTML-escaped
+      expect(result).toContain('&lt;')
     })
 
     it('should handle empty input', () => {

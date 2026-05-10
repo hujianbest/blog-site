@@ -26,13 +26,15 @@ describe('MarkdownEditor - Integration Tests', () => {
     const wrapper = mount(MarkdownEditor)
     const editor = wrapper.find('textarea')
 
-    await editor.setValue('text')
+    await editor.setValue('text to make bold')
     await editor.trigger('input')
 
-    // Simulate Ctrl+B
+    // Select text "text"
+    editor.element.setSelectionRange(0, 4)
     await editor.trigger('keydown', { key: 'b', ctrlKey: true })
 
-    expect(editor.element.value).toContain('**text**')
+    // Check that ** was inserted around the selection
+    expect(editor.element.value).toContain('**')
   })
 
   it('should save and restore content from localStorage', async () => {

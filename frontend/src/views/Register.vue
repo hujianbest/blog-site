@@ -138,7 +138,7 @@ const rules = {
       trigger: ['blur', 'change'],
     },
     {
-      validator: (rule: any, value: string) => {
+      validator: (_rule: any, value: string) => {
         return value === formValue.value.password
       },
       message: '两次输入的密码不一致',

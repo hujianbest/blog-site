@@ -29,7 +29,7 @@ export const useAuthStore = defineStore('auth', () => {
     localStorage.removeItem('user')
   }
 
-  async register(email: string, password: string, name: string) {
+  async function register(email: string, password: string, name: string) {
     const response = await fetch('http://localhost:3000/api/v1/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -48,7 +48,7 @@ export const useAuthStore = defineStore('auth', () => {
     return data
   }
 
-  async login(email: string, password: string) {
+  async function login(email: string, password: string) {
     const response = await fetch('http://localhost:3000/api/v1/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -67,7 +67,7 @@ export const useAuthStore = defineStore('auth', () => {
     return data
   }
 
-  async refreshTokens() {
+  async function refreshTokens() {
     if (!refreshToken.value) {
       throw new Error('No refresh token available')
     }

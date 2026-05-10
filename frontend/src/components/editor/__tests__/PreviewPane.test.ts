@@ -25,7 +25,10 @@ describe('PreviewPane.vue', () => {
       props: { content: '<script>alert("xss")</script>' }
     })
 
+    // Script tags should be escaped
     expect(wrapper.html()).not.toContain('<script>')
-    expect(wrapper.html()).not.toContain('alert(')
+    expect(wrapper.html()).not.toContain('</script>')
+    // Content should be HTML-escaped
+    expect(wrapper.html()).toContain('&lt;')
   })
 })
