@@ -45,7 +45,7 @@ hujianbest.github.io/
 │   │   └── sitemap.xml
 │   └── package.json
 │
-└── backend-springboot/          # Spring Boot 后端项目
+└── backend/          # Spring Boot 后端项目
     ├── src/main/
     │   ├── java/com/example/writingplatform/
     │   │   ├── config/          # 配置类
@@ -98,7 +98,7 @@ npm run dev
 
 ### 后端启动 (需要 Java 17+)
 ```bash
-cd backend-springboot
+cd backend
 mvn spring-boot:run
 # API: http://localhost:8080/api
 # Swagger: http://localhost:8080/api/swagger-ui.html

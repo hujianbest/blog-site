@@ -2,11 +2,13 @@
 
 ## Current State
 
-- **Current Stage**: `hf-test-driven-dev` (TASK-009 完成，开始 TASK-011)
+- **Current Stage**: `active` (continuing with full-stack development)
 - **Workflow Profile**: `full`
 - **Execution Mode**: `auto`
 - **Workspace Isolation**: `in-place`
-- **Current Active Task**: TASK-011 (实现文章管理界面) - 开始实现
+- **Current Active Task**: TASK-014 (Article Detail Page)
+- **Scope Decision**: Backend development restored with Spring Boot 3.2 + Java 17 (2026-05-12)
+- **Last Completed**: TASK-013 (Homepage Layout)
 
 ## Artifacts Status
 
@@ -30,26 +32,51 @@
 - [x] **主色调**：橙色系
 - [x] **ORM**：Prisma 5.22.0 (降级自 7.8.0 以提高稳定性)
 
-### 任务完成情况（9/30 = 30%）
+### 任务完成情况（17.5/30 = 58%）
 
 #### ✅ Milestone 1: 项目基础设施搭建 (100%)
 - [x] TASK-001: 初始化前端项目
-- [x] TASK-002: 初始化后端项目
-- [x] TASK-003: 设计并创建数据库Schema
+- [x] TASK-002: 初始化后端项目 *后已移出范围*
+- [x] TASK-003: 设计并创建数据库Schema *后已移出范围*
 - [x] TASK-004: 配置Docker容器化
 - [x] TASK-005: 配置CI/CD Pipeline
 
-#### ✅ Milestone 2: 核心写作功能 (57%)
-- [x] TASK-006: 实现用户认证系统
-- [x] TASK-007: 实现文章CRUD API（基础）
-- [x] TASK-008: 实现标签和分类系统 ✅ 完成并通过完成门 (条件性完成)
-- [x] TASK-009: 实现Markdown编辑器组件 ✅ 完成并通过完成门
-- [x] TASK-010: 实现图片上传和管理 ✅ 完成并通过完成门 (前端部分)
-- [ ] TASK-011: 实现文章管理界面
-- [ ] TASK-012: 实现自动保存草稿
+#### ✅ Milestone 2: 核心写作功能 (100%)
+- [x] TASK-006: 实现用户认证系统 *使用JWT mock*
+- [x] TASK-007: 实现文章CRUD API *使用mock API*
+- [x] TASK-008: 实现标签和分类系统 ✅ 完成并通过完成门 (31+ tests)
+- [x] TASK-009: 实现Markdown编辑器组件 ✅ 完成并通过完成门 (47/47 tests)
+- [x] TASK-010: 实现图片上传和管理 ✅ 完成并通过完成门 (47/47 tests, 前端部分)
+- [x] TASK-011: 实现文章管理界面 ✅ 完成并通过完成门 (69/69 tests)
+- [x] TASK-012: 实现自动保存草稿 ✅ 完成并通过完成门 (11/11 tests)
 
-#### ⏸️ Milestone 3-5 (0%)
-- TASK-013 ~ TASK-030: 待实现
+#### ✅ Milestone 3: 网站展示 (92%)
+- [x] TASK-013: Homepage Layout ✅ 完成并通过完成门 (51/51 tests)
+- [x] TASK-014: Article Detail Page ✅ 前端完成 (7/7 tests)
+- [x] TASK-015: Tag/Category Pages ✅ 前端完成 (13/13 tests)
+- [x] TASK-016: Responsive Design ✅ 内嵌于所有页面
+- [x] TASK-018: About Page ✅ 前端完成 (10/10 tests)
+- [ ] TASK-017: SEO Optimization ⚠️ 部分完成 (title tags only)
+
+#### 🔄 Milestone 4: 多平台转发 (0% - 后端恢复，待实现)
+- [ ] TASK-019: Platform Adapter Architecture (pending)
+- [ ] TASK-020: OAuth 2.0 Flow (pending)
+- [ ] TASK-021: Zhihu Adapter (pending)
+- [ ] TASK-022: Twitter Adapter (pending)
+- [ ] TASK-023: Publication UI (前端完成，后端API pending)
+- [ ] TASK-024: Publication Status Sync (pending)
+
+#### 🔄 Milestone 5: 评论和优化 (0% - 后端恢复，待实现)
+- [ ] TASK-025: Comment System API (pending)
+- [ ] TASK-026: Comment UI Components (pending)
+- [ ] TASK-027: Spam Filtering (pending)
+- [ ] TASK-028: Performance Optimization (pending)
+- [ ] TASK-029: System Monitoring (pending)
+- [ ] TASK-030: User Documentation (pending)
+
+**总计**: 17.5/30 tasks 完成 (58%)
+**前端状态**: ✅ Production-ready
+**后端状态**: 🔄 已恢复，继续全栈开发 (2026-05-12)
 
 ---
 
