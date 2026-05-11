@@ -1,12 +1,18 @@
 <template>
   <div class="markdown-editor">
-    <EditorToolbar
-      @bold="insertBold"
-      @italic="insertItalic"
-      @heading="insertHeading"
-      @list="insertList"
-      @code="insertCode"
-    />
+    <div class="editor-header">
+      <EditorToolbar
+        @bold="insertBold"
+        @italic="insertItalic"
+        @heading="insertHeading"
+        @list="insertList"
+        @code="insertCode"
+      />
+      <AutoSaveIndicator
+        :status="autoSaveState.status.value"
+        :last-saved-time="autoSaveState.lastSavedTime.value"
+      />
+    </div>
     <div class="editor-container">
       <textarea
         ref="editorRef"
@@ -27,12 +33,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, onMounted, computed } from 'vue'
+import { useMessage } from 'naive-ui'
 import EditorToolbar from './EditorToolbar.vue'
 import PreviewPane from './PreviewPane.vue'
+import AutoSaveIndicator from './AutoSaveIndicator.vue'
+import { useAutoSave } from '@/utils/autoSave'
 
 interface Props {
   modelValue?: string
+  articleId?: string
 }
 
 interface Emits {
@@ -42,11 +52,38 @@ interface Emits {
 
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
+const message = useMessage()
 
 const content = ref(props.modelValue || '')
 const editorRef = ref<HTMLTextAreaElement>()
 const previewRef = ref<InstanceType<typeof PreviewPane>>()
-let autoSaveTimer: ReturnType<typeof setTimeout> | null = null
+
+// Auto-save functionality
+const saveToApi = async ({ content: saveContent, key }: { content: string; key: string }) => {
+  try {
+    const response = await fetch(`/api/v1/articles/${key}/draft`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content: saveContent })
+    })
+
+    if (response.ok) {
+      const data = await response.json()
+      message.success('保存成功')
+      return { success: true, data }
+    } else {
+      const error = await response.json()
+      message.error('保存失败: ' + (error.message || '未知错误'))
+      return { success: false, error }
+    }
+  } catch (error) {
+    message.error('保存失败: 网络错误')
+    return { success: false, error }
+  }
+}
+
+const articleKey = computed(() => props.articleId || 'new-article')
+const autoSaveState = useAutoSave(saveToApi, articleKey.value, { debounceMs: 30000 })
 
 watch(() => props.modelValue, (newValue) => {
   if (newValue !== content.value) {
@@ -56,30 +93,10 @@ watch(() => props.modelValue, (newValue) => {
 
 function onInput() {
   emit('update:modelValue', content.value)
-  scheduleAutoSave()
+  autoSaveState.triggerAutoSave(content.value)
 }
 
-function scheduleAutoSave() {
-  if (autoSaveTimer) {
-    clearTimeout(autoSaveTimer)
-  }
-  autoSaveTimer = setTimeout(() => {
-    emit('save', content.value)
-  }, 30000)
-}
-
-function onScroll(event: Event) {
-  const target = event.target as HTMLTextAreaElement
-  const scrollPercentage = target.scrollTop / (target.scrollHeight - target.clientHeight)
-
-  if (previewRef.value?.$el) {
-    const previewEl = previewRef.value.$el as HTMLElement
-    const previewScrollTop = scrollPercentage * (previewEl.scrollHeight - previewEl.clientHeight)
-    previewEl.scrollTop = previewScrollTop
-  }
-}
-
-function onKeydown(event: KeyboardEvent) {
+async function onKeydown(event: KeyboardEvent) {
   if (event.ctrlKey || event.metaKey) {
     switch (event.key.toLowerCase()) {
       case 'b':
@@ -92,9 +109,29 @@ function onKeydown(event: KeyboardEvent) {
         break
       case 's':
         event.preventDefault()
-        emit('save', content.value)
+        await autoSaveState.manualSave(content.value)
         break
     }
+  }
+}
+
+// Restore draft on mount
+onMounted(() => {
+  const savedDraft = autoSaveState.restoreDraft()
+  if (savedDraft && (!content.value || content.value.trim() === '')) {
+    content.value = savedDraft
+    emit('update:modelValue', savedDraft)
+  }
+})
+
+function onScroll(event: Event) {
+  const target = event.target as HTMLTextAreaElement
+  const scrollPercentage = target.scrollTop / (target.scrollHeight - target.clientHeight)
+
+  if (previewRef.value?.$el) {
+    const previewEl = previewRef.value.$el as HTMLElement
+    const previewScrollTop = scrollPercentage * (previewEl.scrollHeight - previewEl.clientHeight)
+    previewEl.scrollTop = previewScrollTop
   }
 }
 
@@ -191,6 +228,15 @@ function insertCode() {
   border: 1px solid #e5e5e5;
   border-radius: 8px;
   overflow: hidden;
+}
+
+.editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid #e5e5e5;
+  background-color: #fafafa;
 }
 
 .editor-container {

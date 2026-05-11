@@ -1,0 +1,13 @@
+
+> frontend@0.0.0 test
+> vitest --run
+
+
+ RUN  v4.1.5 /mnt/e/workspace/hujianbest.github.io/frontend
+
+
+ Test Files  7 passed (7)
+      Tests  47 passed (47)
+   Start at  01:41:53
+   Duration  11.56s (transform 2.52s, setup 1.47s, import 8.30s, tests 278ms, environment 58.02s)
+

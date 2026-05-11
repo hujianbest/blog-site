@@ -1,71 +1,115 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
-    <LayoutHeader />
+  <div class="min-h-screen flex flex-col bg-gray-50">
+    <Header />
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 class="text-3xl font-bold text-gray-900 mb-8">分类归档</h1>
+    <main class="py-16 flex-1">
+      <div class="container mx-auto px-4">
+        <h1 class="text-4xl font-bold text-gray-900 mb-8 text-center">分类归档</h1>
 
-      <div v-if="loading" class="text-center py-12">
-        <p class="text-gray-600">加载中...</p>
-      </div>
+        <!-- Loading State -->
+        <div v-if="loading" class="text-center py-12">
+          <div class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-gray-300 border-t-blue-600"></div>
+        </div>
 
-      <div v-else class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <router-link
-          v-for="category in categories"
-          :key="category.id"
-          :to="`/categories/${category.id}`"
-          class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow"
-        >
-          <h2 class="text-xl font-semibold text-gray-900 mb-2">
-            {{ category.name }}
-          </h2>
-          <p class="text-gray-600">
-            {{ category.articleCount }} 篇文章
-          </p>
-        </router-link>
+        <!-- Empty State -->
+        <div v-else-if="categories.length === 0" class="text-center py-12">
+          <p class="text-gray-600">暂无分类</p>
+        </div>
+
+        <!-- Category Tree -->
+        <div v-else class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-8">
+          <ul class="space-y-4">
+            <li
+              v-for="category in categoryTree"
+              :key="category.id"
+              class="category-item"
+            >
+              <div class="flex items-center justify-between py-2 px-4 bg-gray-50 rounded hover:bg-gray-100 transition-colors">
+                <router-link
+                  :to="`/categories/${category.id}`"
+                  class="flex-1 text-lg font-medium text-gray-900 hover:text-blue-600"
+                >
+                  {{ category.name }}
+                </router-link>
+                <span class="text-sm text-gray-500">
+                  {{ category.articleCount }} 篇文章
+                </span>
+              </div>
+
+              <!-- Subcategories -->
+              <ul v-if="category.children?.length" class="ml-8 mt-2 space-y-2">
+                <li
+                  v-for="child in category.children"
+                  :key="child.id"
+                >
+                  <div class="flex items-center justify-between py-2 px-4 bg-gray-50 rounded hover:bg-gray-100 transition-colors">
+                    <router-link
+                      :to="`/categories/${child.id}`"
+                      class="flex-1 text-gray-700 hover:text-blue-600"
+                    >
+                      {{ child.name }}
+                    </router-link>
+                    <span class="text-sm text-gray-500">
+                      {{ child.articleCount }} 篇文章
+                    </span>
+                  </div>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
       </div>
     </main>
 
-    <LayoutFooter />
+    <Footer />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import LayoutHeader from '../components/layout/Header.vue'
-import LayoutFooter from '../components/layout/Footer.vue'
+import { ref, computed, onMounted } from 'vue'
+import Header from '@/components/layout/Header.vue'
+import Footer from '@/components/layout/Footer.vue'
 
 interface Category {
   id: string
   name: string
   articleCount: number
+  parentId: string | null
+  children?: Category[]
 }
 
 const categories = ref<Category[]>([])
 const loading = ref(true)
 
-onMounted(async () => {
+const categoryTree = computed(() => {
+  const buildTree = (parentId: string | null = null): Category[] => {
+    return categories.value
+      .filter(cat => cat.parentId === parentId)
+      .map(cat => ({
+        ...cat,
+        children: buildTree(cat.id)
+      }))
+  }
+
+  return buildTree()
+})
+
+const loadCategories = async () => {
+  loading.value = true
   try {
-    const response = await fetch('http://localhost:3000/api/v1/categories')
+    const response = await fetch('/api/v1/categories')
     if (response.ok) {
       const data = await response.json()
-      categories.value = data.categories || []
+      categories.value = data.data || []
     }
   } catch (error) {
     console.error('Failed to load categories:', error)
-    // Use mock data
-    categories.value = [
-      { id: '1', name: '技术', articleCount: 10 },
-      { id: '2', name: '生活', articleCount: 5 },
-      { id: '3', name: '思考', articleCount: 3 },
-      { id: '4', name: '随笔', articleCount: 8 }
-    ]
   } finally {
     loading.value = false
   }
-})
+}
 
 onMounted(() => {
-  document.title = '分类归档 - 我的博客'
+  loadCategories()
 })
 </script>

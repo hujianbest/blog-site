@@ -1,0 +1,13 @@
+
+> frontend@0.0.0 test
+> vitest autoSave.test.ts AutoSaveIndicator.test.ts --run
+
+
+ RUN  v4.1.5 /mnt/e/workspace/hujianbest.github.io/frontend
+
+
+ Test Files  2 passed (2)
+      Tests  11 passed (11)
+   Start at  02:28:11
+   Duration  6.64s (transform 678ms, setup 0ms, import 1.57s, tests 27ms, environment 9.13s)
+

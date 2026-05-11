@@ -1,118 +1,119 @@
 <template>
-  <article class="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+  <article
+    class="bg-white rounded-lg shadow hover:shadow-lg transition-shadow duration-200 overflow-hidden cursor-pointer"
+    @click="handleClick"
+  >
     <!-- Article Image (optional) -->
     <div v-if="article.coverImage" class="aspect-video overflow-hidden">
       <img
         :src="article.coverImage"
         :alt="article.title"
-        class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+        class="w-full h-full object-cover hover:scale-105 transition-transform duration-200"
       />
     </div>
 
     <div class="p-6">
       <!-- Article Title -->
-      <router-link
-        :to="`/articles/${article.id}`"
-        class="block group"
-      >
-        <h3 class="text-xl font-semibold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors line-clamp-2">
-          {{ article.title }}
-        </h3>
-      </router-link>
+      <h2 class="text-xl font-semibold text-gray-900 mb-3 hover:text-blue-600 transition-colors">
+        {{ article.title }}
+      </h2>
 
       <!-- Article Excerpt -->
       <p class="text-gray-600 mb-4 line-clamp-3">
-        {{ article.excerpt }}
+        {{ excerpt }}
       </p>
 
       <!-- Article Meta -->
-      <div class="flex items-center justify-between text-sm">
-        <div class="flex items-center space-x-4">
-          <span class="text-gray-500">
-            {{ formatDate(article.createdAt) }}
-          </span>
-          <span class="text-gray-500">
-            {{ article.author.name }}
+      <div class="flex flex-wrap items-center gap-4 text-sm text-gray-500">
+        <!-- Date -->
+        <div class="flex items-center gap-1">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          <span>{{ formatDate(article.publishedAt) }}</span>
+        </div>
+
+        <!-- Category -->
+        <div v-if="article.category" class="flex items-center gap-1">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+          </svg>
+          <span>{{ article.category.name }}</span>
+        </div>
+
+        <!-- Tags -->
+        <div v-if="article.tags?.length" class="flex items-center gap-2">
+          <span
+            v-for="tag in article.tags.slice(0, 3)"
+            :key="tag.id"
+            class="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs"
+          >
+            #{{ tag.name }}
           </span>
         </div>
-        <router-link
-          :to="`/articles/${article.id}`"
-          class="text-primary-600 hover:text-primary-700 font-medium"
-        >
-          阅读 →
-        </router-link>
-      </div>
-
-      <!-- Tags -->
-      <div v-if="article.tags && article.tags.length > 0" class="mt-4 flex flex-wrap gap-2">
-        <router-link
-          v-for="tag in article.tags.slice(0, 3)"
-          :key="tag.id"
-          :to="`/tags/${tag.name}`"
-          class="inline-block px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded hover:bg-gray-200 transition-colors"
-        >
-          {{ tag.name }}
-        </router-link>
       </div>
     </div>
   </article>
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
+
+interface Tag {
+  id: string
+  name: string
+}
+
+interface Category {
+  id: string
+  name: string
+}
+
 interface Article {
   id: string
   title: string
-  excerpt: string
-  createdAt: string
-  author: {
-    name: string
-  }
-  tags: Array<{
-    id: string
-    name: string
-  }>
+  content: string
   coverImage?: string
+  publishedAt: string
+  category?: Category
+  tags?: Tag[]
 }
 
 interface Props {
   article: Article
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 
-function formatDate(dateString: string): string {
+const emit = defineEmits<{
+  click: [article: Article]
+}>()
+
+const excerpt = computed(() => {
+  const text = props.article.content
+    .replace(/#{1,6}\s/g, '')
+    .replace(/\*\*/g, '')
+    .replace(/\*/g, '')
+    .replace(/`/g, '')
+    .replace(/\n/g, ' ')
+  return text.length > 150 ? text.slice(0, 150) + '...' : text
+})
+
+const formatDate = (dateString: string) => {
   const date = new Date(dateString)
-  const now = new Date()
-  const diffInDays = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24))
+  return date.toLocaleDateString('zh-CN', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  })
+}
 
-  if (diffInDays === 0) {
-    return '今天'
-  } else if (diffInDays === 1) {
-    return '昨天'
-  } else if (diffInDays < 7) {
-    return `${diffInDays} 天前`
-  } else if (diffInDays < 30) {
-    return `${Math.floor(diffInDays / 7)} 周前`
-  } else if (diffInDays < 365) {
-    return `${Math.floor(diffInDays / 30)} 月前`
-  } else {
-    return date.toLocaleDateString('zh-CN', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit'
-    })
-  }
+const handleClick = () => {
+  emit('click', props.article)
 }
 </script>
 
 <style scoped>
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
 .line-clamp-3 {
   display: -webkit-box;
   -webkit-line-clamp: 3;
