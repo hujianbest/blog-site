@@ -108,13 +108,7 @@ const handleArticleClick = (article: Article) => {
 onMounted(() => {
   loadArticles()
 })
-</script>
 
-<!-- SEO Meta Tags -->
-<head>
-  <title>首页 - My Blog</title>
-  <meta name="description" content="欢迎来到我的个人博客，记录技术探索与思考" />
-  <meta property="og:title" content="首页 - My Blog" />
-  <meta property="og:description" content="记录技术探索，分享学习心得" />
-  <meta property="og:type" content="website" />
-</head>
+// SEO Meta Tags (should be set by router/index.ts)
+document.title = '首页 - My Blog'
+</script>

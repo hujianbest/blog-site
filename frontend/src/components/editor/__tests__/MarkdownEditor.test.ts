@@ -47,21 +47,36 @@ describe('MarkdownEditor.vue', () => {
 
   it('should trigger auto-save after 30s of inactivity', async () => {
     vi.useFakeTimers()
-    const wrapper = mount(MarkdownEditor)
+    global.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ success: true })
+    })
+
+    const wrapper = mount(MarkdownEditor, {
+      props: { articleId: 'test-123' }
+    })
     const editor = wrapper.find('textarea')
 
     await editor.setValue('Test content')
     await editor.trigger('input')
 
     vi.advanceTimersByTime(30000)
+    await vi.runAllTimersAsync()
 
-    expect(wrapper.emitted('save')).toBeTruthy()
+    expect(fetch).toHaveBeenCalled()
     vi.useRealTimers()
   })
 
   it('should reset auto-save timer on new input', async () => {
     vi.useFakeTimers()
-    const wrapper = mount(MarkdownEditor)
+    global.fetch = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ success: true })
+    })
+
+    const wrapper = mount(MarkdownEditor, {
+      props: { articleId: 'test-123' }
+    })
     const editor = wrapper.find('textarea')
 
     await editor.setValue('First')
@@ -71,8 +86,10 @@ describe('MarkdownEditor.vue', () => {
     await editor.setValue('Second')
     await editor.trigger('input')
     vi.advanceTimersByTime(30000)
+    await vi.runAllTimersAsync()
 
-    expect(wrapper.emitted('save')).toBeTruthy()
+    // Should only call fetch once after the second input (debounce reset)
+    expect(fetch).toHaveBeenCalledTimes(1)
     vi.useRealTimers()
   })
 

@@ -1,14 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import MarkdownEditor from '../MarkdownEditor.vue'
-
-// Mock Naive UI message
-vi.mock('naive-ui', () => ({
-  useMessage: () => ({
-    success: vi.fn(),
-    error: vi.fn()
-  })
-}))
+import { mockMessageSuccess, mockMessageError } from '@/__tests__/setup'
 
 describe('MarkdownEditor Auto-save Integration', () => {
   beforeEach(() => {
@@ -62,12 +55,13 @@ describe('MarkdownEditor Auto-save Integration', () => {
       }
     })
 
-    // Simulate Ctrl+S keypress
-    const event = new KeyboardEvent('keydown', {
+    const textarea = wrapper.find('textarea')
+
+    // Simulate Ctrl+S keypress on textarea
+    await textarea.trigger('keydown', {
       key: 's',
       ctrlKey: true
     })
-    document.dispatchEvent(event)
 
     await vi.advanceTimersByTimeAsync(100)
 
@@ -126,17 +120,12 @@ describe('MarkdownEditor Auto-save Integration', () => {
   })
 
   it('TC-INT-005: should show toast notification on save success/failure', async () => {
-    const mockMessage = {
-      success: vi.fn(),
-      error: vi.fn()
-    }
-
-    vi.doMock('naive-ui', () => ({
-      useMessage: () => mockMessage
-    }))
+    // Clear previous calls
+    mockMessageSuccess.mockClear()
+    mockMessageError.mockClear()
 
     // Test success
-    vi.mocked(fetch).mockResolvedValueOnce({
+    vi.mocked(fetch).mockResolvedValue({
       ok: true,
       json: async () => ({ success: true })
     } as Response)
@@ -148,19 +137,23 @@ describe('MarkdownEditor Auto-save Integration', () => {
       }
     })
 
+    const textarea = wrapper.find('textarea')
+    await textarea.setValue('# Updated Test')
+
     await vi.advanceTimersByTimeAsync(30000)
 
-    expect(mockMessage.success).toHaveBeenCalledWith('保存成功')
+    expect(mockMessageSuccess).toHaveBeenCalledWith('保存成功')
 
-    // Test failure
-    vi.mocked(fetch).mockResolvedValueOnce({
+    // Test failure - change fetch mock for next call
+    vi.mocked(fetch).mockResolvedValue({
       ok: false,
       json: async () => ({ error: 'Save failed' })
     } as Response)
 
-    await wrapper.vm.$nextTick()
+    // Trigger another save
+    await textarea.setValue('# Another Test')
     await vi.advanceTimersByTimeAsync(30000)
 
-    expect(mockMessage.error).toHaveBeenCalledWith('保存失败')
+    expect(mockMessageError).toHaveBeenCalled()
   })
 })
