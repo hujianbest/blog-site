@@ -7,11 +7,12 @@
 ## Feature Metadata
 
 - **ID**: 001-personal-writing-platform
-- **Status**: 开发中 (8/30 任务完成, 27%)
+- **Status**: 全栈开发进行中 (17.5/30 任务完成, 58%)
 - **Created**: 2026-05-08
 - **Profile**: full
-- **Current Stage**: hf-workflow-router
-- **Latest Closeout**: TASK-008 (2026-05-10)
+- **Current Stage**: active (continuing with full-stack development)
+- **Scope Decision**: Backend restored, continuing full-stack (2026-05-12)
+- **Current Task**: TASK-014 (Article Detail Page)
 
 ## Quick Links
 
@@ -38,4 +39,46 @@
 
 ## Current Stage
 
-任务计划已完成，包含30个开发任务，分为5个里程碑。
+任务计划包含30个开发任务，分为5个里程碑。
+
+### 已完成里程碑
+- ✅ **Milestone 1: 项目基础设施** (5/5 tasks - 100%)
+- ✅ **Milestone 2: 核心写作功能** (7/7 tasks - 100%)
+- ✅ **Milestone 3: 网站展示** (5.5/6 tasks - 92%)
+
+### 进行中
+- 🔄 **Milestone 4: 多平台转发** (0/6 tasks - 0%)
+  - 状态: 后端已恢复，继续开发
+  - 前端UI完成 (Publication.vue)
+  - 后端API待实现
+- 🔄 **Milestone 5: 评论和优化** (0/6 tasks - 0%)
+  - 状态: 后端已恢复，继续开发
+  - 前端组件目录存在 (空)
+  - 后端API待实现
+
+---
+
+## Current Status
+
+### Workflow Status: 🔄 ACTIVE
+
+**Scope Decision**: **继续全栈开发** (2026-05-12)
+
+**Completed Scope**:
+- TASK-001 through TASK-013 (17.5 tasks)
+- Milestones 1, 2, and 3 (frontend complete)
+- 156 tests (100% passing)
+- 27 review/verification documents
+
+**Rationale**:
+- Frontend MVP complete and production-ready
+- User decided to continue with full-stack development
+- Backend services restored from previous commit
+- Remaining 43% to be implemented
+
+**Decision Made**: ✅ **继续全栈开发** (Option B)
+
+**See Also**:
+- [closeout.md](closeout.md) - Previous closeout pack (not executed)
+- [progress.md](progress.md) - Current task progress
+- [tasks.md](tasks.md) - Remaining tasks (TASK-014 through TASK-030)
