@@ -146,6 +146,18 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import Header from '@/components/layout/Header.vue'
 import Footer from '@/components/layout/Footer.vue'
+import { setMetaTags } from '@/utils/seo'
+
+onMounted(() => {
+  // SEO Meta Tags
+  setMetaTags({
+    title: '关于我 - My Blog',
+    description: '全栈开发者 / 技术博主 / 开源爱好者。热爱编程，享受创造的过程。专注于 Web 开发，喜欢探索新技术。',
+    ogType: 'website',
+    twitterCard: 'summary'
+  })
+})
 </script>

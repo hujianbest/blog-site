@@ -30,7 +30,7 @@ public class CommentController {
     @GetMapping
     @Operation(summary = "Get comments for an article")
     public ApiResponse<List<CommentDto>> getComments(@PathVariable Long articleId) {
-        List<CommentDto> response = commentService.getArticleComments(articleId);
+        List<CommentDto> response = commentService.getCommentsByArticleId(articleId);
         return ApiResponse.success(response);
     }
 
@@ -44,14 +44,14 @@ public class CommentController {
     @PutMapping("/{commentId}/approve")
     @Operation(summary = "Approve a comment")
     public ApiResponse<CommentDto> approveComment(@PathVariable Long commentId) {
-        CommentDto response = commentService.approveComment(commentId);
+        CommentDto response = commentService.approve(commentId);
         return ApiResponse.success(response);
     }
 
     @DeleteMapping("/{commentId}")
     @Operation(summary = "Delete a comment")
     public ApiResponse<Void> deleteComment(@PathVariable Long commentId) {
-        commentService.deleteComment(commentId);
+        commentService.delete(commentId);
         return ApiResponse.success(null, "Comment deleted successfully");
     }
 }

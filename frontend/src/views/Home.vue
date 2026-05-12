@@ -61,6 +61,7 @@ import { useRouter } from 'vue-router'
 import Header from '@/components/layout/Header.vue'
 import Footer from '@/components/layout/Footer.vue'
 import ArticlePreview from '@/components/ArticlePreview.vue'
+import { setMetaTags } from '@/utils/seo'
 
 interface Tag {
   id: string
@@ -106,9 +107,14 @@ const handleArticleClick = (article: Article) => {
 }
 
 onMounted(() => {
+  // SEO Meta Tags
+  setMetaTags({
+    title: '首页 - My Blog',
+    description: '记录技术探索，分享学习心得，沉淀思考点滴。欢迎来到我的个人博客，探索最新的技术文章和教程。',
+    ogType: 'website',
+    twitterCard: 'summary_large_image'
+  })
+
   loadArticles()
 })
-
-// SEO Meta Tags (should be set by router/index.ts)
-document.title = '首页 - My Blog'
 </script>
