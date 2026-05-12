@@ -120,7 +120,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import Header from '@/components/layout/Header.vue'
 import Footer from '@/components/layout/Footer.vue'
@@ -128,6 +128,7 @@ import ReadingProgress from '@/components/ReadingProgress.vue'
 import TOC from '@/components/TOC.vue'
 import MarkdownIt from 'markdown-it'
 import hljs from 'highlight.js'
+import { setMetaTags, generateArticleStructuredData, injectStructuredData } from '@/utils/seo'
 
 interface Tag {
   id: string
@@ -146,6 +147,8 @@ interface Article {
   publishedAt: string
   category?: Category
   tags?: Tag[]
+  excerpt?: string
+  coverImage?: string
 }
 
 const route = useRoute()
@@ -196,6 +199,33 @@ const copyLink = async () => {
   }
 }
 
+const updateSEO = () => {
+  if (!article.value) return
+
+  // Extract plain text description from content
+  const plainText = article.value.content.replace(/[#*`>\-]/g, '').trim()
+  const description = article.value.excerpt || plainText.substring(0, 160) + '...'
+
+  // Set meta tags
+  setMetaTags({
+    title: `${article.value.title} - My Blog`,
+    description: description,
+    ogImage: article.value.coverImage,
+    ogType: 'article',
+    twitterCard: 'summary_large_image'
+  })
+
+  // Generate and inject structured data
+  const structuredData = generateArticleStructuredData({
+    title: article.value.title,
+    description: description,
+    publishedDate: article.value.publishedAt,
+    authorName: 'Blog Author',
+    images: article.value.coverImage ? [article.value.coverImage] : undefined
+  })
+  injectStructuredData(structuredData)
+}
+
 const loadArticle = async () => {
   loading.value = true
   try {
@@ -205,6 +235,9 @@ const loadArticle = async () => {
     if (response.ok) {
       const data = await response.json()
       article.value = data.data
+
+      // Update SEO after article loads
+      updateSEO()
 
       // Load adjacent articles
       await loadAdjacentArticles()
@@ -241,6 +274,11 @@ const loadAdjacentArticles = async () => {
 onMounted(() => {
   loadArticle()
 })
+
+// Update SEO when article changes
+watch(article, () => {
+  updateSEO()
+}, { deep: true })
 </script>
 
 <style>
