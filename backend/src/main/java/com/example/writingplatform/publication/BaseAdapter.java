@@ -21,15 +21,26 @@ public abstract class BaseAdapter implements PlatformAdapter {
     
     @Override
     public String publish(ArticleResponse article, String accessToken) throws PublicationException {
-        rateLimiter.acquire();
-        
-        return retryPolicy.execute(() -> {
-            return doPublish(article, accessToken);
-        });
+        try {
+            rateLimiter.acquire();
+            return retryPolicy.execute(() -> {
+                try {
+                    return doPublish(article, accessToken);
+                } catch (Exception e) {
+                    throw new RuntimeException("Wrapped exception", e);
+                }
+            });
+        } catch (RateLimiter.RateLimitException | InterruptedException e) {
+            log.error("Rate limit exceeded or interrupted", e);
+            throw new PublicationException("Rate limit exceeded", e);
+        } catch (Exception e) {
+            log.error("Publication failed", e);
+            throw new PublicationException("Publication failed: " + e.getMessage(), e);
+        }
     }
     
     /**
      * Subclasses implement the actual publishing logic
      */
-    protected abstract String doPublish(ArticleResponse article, String accessToken) throws PublicationException;
+    protected abstract String doPublish(ArticleResponse article, String accessToken) throws Exception;
 }

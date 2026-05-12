@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +25,21 @@ public class CommentService {
                 .collect(Collectors.toList());
     }
 
+    public List<CommentDto> getReplies(Long commentId) {
+        return commentRepository.findByParentIdOrderByCreatedAtAsc(commentId)
+                .stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    public CommentDto approve(Long commentId) {
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Comment not found"));
+        comment.setStatus(Comment.CommentStatus.APPROVED);
+        comment = commentRepository.save(comment);
+        return convertToDto(comment);
+    }
+
     public CommentDto create(CreateCommentRequest request) {
         Comment comment = new Comment();
         comment.setArticleId(request.getArticleId());
@@ -33,9 +47,8 @@ public class CommentService {
         comment.setAuthorEmail(request.getAuthorEmail());
         comment.setContent(request.getContent());
         comment.setParentId(request.getParentId());
-        comment.setStatus("PENDING");
-        comment.setCreatedAt(LocalDateTime.now());
-        
+        comment.setStatus(Comment.CommentStatus.PENDING);
+
         comment = commentRepository.save(comment);
         return convertToDto(comment);
     }
@@ -55,7 +68,7 @@ public class CommentService {
         dto.setAuthorEmail(comment.getAuthorEmail());
         dto.setContent(comment.getContent());
         dto.setParentId(comment.getParentId());
-        dto.setStatus(comment.getStatus() != null ? comment.getStatus().name() : "PENDING");
+        dto.setStatus(comment.getStatus().name());
         dto.setCreatedAt(comment.getCreatedAt());
         return dto;
     }

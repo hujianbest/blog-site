@@ -25,10 +25,9 @@ public class ProfileService {
 
         user.setName(name);
         user.setBio(bio);
-        // Note: avatarUrl field may not exist in User entity
-        // if (avatarUrl != null) {
-        //     user.setAvatarUrl(avatarUrl);
-        // }
+        if (avatarUrl != null) {
+            user.setAvatar(avatarUrl);
+        }
 
         user = userRepository.save(user);
         return convertToDto(user);
@@ -37,10 +36,12 @@ public class ProfileService {
     private UserDto convertToDto(User user) {
         return new UserDto(
                 user.getId(),
-                user.getName(),
                 user.getEmail(),
+                user.getName(),
                 user.getBio(),
-                null, // avatarUrl - may not exist
+                user.getAvatar(),
+                user.getGithub(),
+                user.getTwitter(),
                 user.getCreatedAt()
         );
     }
