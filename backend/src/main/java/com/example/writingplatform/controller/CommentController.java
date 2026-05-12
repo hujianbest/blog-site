@@ -51,7 +51,7 @@ public class CommentController {
     @DeleteMapping("/{commentId}")
     @Operation(summary = "Delete a comment")
     public ApiResponse<Void> deleteComment(@PathVariable Long commentId) {
-        commentService.deleteComment(commentId);
+        commentService.delete(commentId);
         return ApiResponse.success(null, "Comment deleted successfully");
     }
 }
