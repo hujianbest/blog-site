@@ -4,6 +4,7 @@ import com.example.writingplatform.dto.CommentDto;
 import com.example.writingplatform.dto.CreateCommentRequest;
 import com.example.writingplatform.entity.Comment;
 import com.example.writingplatform.exception.ResourceNotFoundException;
+import com.example.writingplatform.exception.ValidationException;
 import com.example.writingplatform.repository.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,9 +18,11 @@ import java.util.stream.Collectors;
 public class CommentService {
 
     private final CommentRepository commentRepository;
+    private final SpamFilterService spamFilterService;
 
     public List<CommentDto> getCommentsByArticleId(Long articleId) {
-        return commentRepository.findByArticleIdAndParentIdIsNullOrderByCreatedAtAsc(articleId)
+        return commentRepository.findByArticleIdAndParentIdIsNullAndStatusOrderByCreatedAtAsc(
+                articleId, Comment.CommentStatus.APPROVED)
                 .stream()
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
@@ -41,6 +44,16 @@ public class CommentService {
     }
 
     public CommentDto create(CreateCommentRequest request) {
+        // Check for spam
+        SpamFilterService.SpamCheckResult spamCheck = spamFilterService.checkSpam(
+            request.getAuthorEmail(),
+            request.getContent()
+        );
+
+        if (spamCheck.isSpam()) {
+            throw new ValidationException(spamCheck.reason());
+        }
+
         Comment comment = new Comment();
         comment.setArticleId(request.getArticleId());
         comment.setAuthorName(request.getAuthorName());
