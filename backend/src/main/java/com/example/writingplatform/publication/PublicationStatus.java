@@ -2,10 +2,19 @@ package com.example.writingplatform.publication;
 
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class PublicationStatus {
+    private Long articleId;
     private String platform;
-    private String status; // pending, success, failed
+    private Status status;
     private String message;
-    private String publishedUrl;
+    private Date publishedAt;
+
+    public enum Status {
+        PENDING,
+        PUBLISHED,
+        FAILED
+    }
 }
