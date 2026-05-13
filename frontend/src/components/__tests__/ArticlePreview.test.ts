@@ -35,6 +35,23 @@ describe('ArticlePreview.vue', () => {
     expect(excerpt.text()).toContain('This is a test article')
   })
 
+  it('should render excerpt-only article data without crashing', () => {
+    const wrapper = mount(ArticlePreview, {
+      props: {
+        article: {
+          id: 'fallback-1',
+          title: 'Fallback Article',
+          excerpt: 'Fallback excerpt from article list response',
+          createdAt: '2026-05-10T00:00:00Z'
+        }
+      }
+    })
+
+    expect(wrapper.text()).toContain('Fallback Article')
+    expect(wrapper.text()).toContain('Fallback excerpt from article list response')
+    expect(wrapper.text()).toContain('2026')
+  })
+
   it('should truncate long content to 150 characters', () => {
     const longContent = '# Test\n\n'.repeat(50)
     const wrapper = mount(ArticlePreview, {

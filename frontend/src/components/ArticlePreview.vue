@@ -30,15 +30,15 @@
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
           </svg>
-          <span>{{ formatDate(article.publishedAt) }}</span>
+          <span>{{ formatDate(articleDate) }}</span>
         </div>
 
         <!-- Category -->
-        <div v-if="article.category" class="flex items-center gap-1">
+        <div v-if="categoryName" class="flex items-center gap-1">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
           </svg>
-          <span>{{ article.category.name }}</span>
+          <span>{{ categoryName }}</span>
         </div>
 
         <!-- Tags -->
@@ -60,22 +60,25 @@
 import { computed } from 'vue'
 
 interface Tag {
-  id: string
+  id: string | number
   name: string
 }
 
 interface Category {
-  id: string
+  id: string | number
   name: string
 }
 
 interface Article {
-  id: string
+  id: string | number
   title: string
-  content: string
+  content?: string
+  excerpt?: string
   coverImage?: string
-  publishedAt: string
+  publishedAt?: string
+  createdAt?: string
   category?: Category
+  categoryName?: string
   tags?: Tag[]
 }
 
@@ -89,8 +92,12 @@ const emit = defineEmits<{
   click: [article: Article]
 }>()
 
+const categoryName = computed(() => props.article.category?.name ?? props.article.categoryName ?? '')
+const articleDate = computed(() => props.article.publishedAt ?? props.article.createdAt)
+
 const excerpt = computed(() => {
-  const text = props.article.content
+  const source = props.article.content ?? props.article.excerpt ?? ''
+  const text = source
     .replace(/#{1,6}\s/g, '')
     .replace(/\*\*/g, '')
     .replace(/\*/g, '')
@@ -99,8 +106,16 @@ const excerpt = computed(() => {
   return text.length > 150 ? text.slice(0, 150) + '...' : text
 })
 
-const formatDate = (dateString: string) => {
+const formatDate = (dateString?: string) => {
+  if (!dateString) {
+    return '未发布'
+  }
+
   const date = new Date(dateString)
+  if (Number.isNaN(date.getTime())) {
+    return '未发布'
+  }
+
   return date.toLocaleDateString('zh-CN', {
     year: 'numeric',
     month: '2-digit',

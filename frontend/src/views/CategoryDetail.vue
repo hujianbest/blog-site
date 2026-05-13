@@ -34,20 +34,21 @@ import LayoutFooter from '../components/layout/Footer.vue'
 import ArticlePreview from '../components/ArticlePreview.vue'
 
 interface Category {
-  id: string
+  id: string | number
   name: string
 }
 
 interface Article {
-  id: string
+  id: string | number
   title: string
-  excerpt: string
-  createdAt: string
-  author: {
-    name: string
-  }
-  tags: Array<{
-    id: string
+  content?: string
+  excerpt?: string
+  coverImage?: string
+  publishedAt?: string
+  createdAt?: string
+  categoryName?: string
+  tags?: Array<{
+    id: string | number
     name: string
   }>
 }
@@ -60,11 +61,19 @@ const loading = ref(true)
 onMounted(async () => {
   try {
     const categoryId = route.params.id as string
-    const response = await fetch(`http://localhost:3000/api/v1/categories/${categoryId}`)
-    if (response.ok) {
-      const data = await response.json()
-      category.value = data.category
-      articles.value = data.articles || []
+    const [categoryResponse, articlesResponse] = await Promise.all([
+      fetch(`/api/v1/categories/${categoryId}`),
+      fetch(`/api/v1/categories/${categoryId}/articles`)
+    ])
+
+    if (categoryResponse.ok) {
+      const data = await categoryResponse.json()
+      category.value = data.data || data.category || null
+    }
+
+    if (articlesResponse.ok) {
+      const data = await articlesResponse.json()
+      articles.value = data.data || data.articles || []
     }
   } catch (error) {
     console.error('Failed to load category:', error)

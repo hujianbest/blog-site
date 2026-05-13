@@ -64,22 +64,25 @@ import ArticlePreview from '@/components/ArticlePreview.vue'
 import { setMetaTags } from '@/utils/seo'
 
 interface Tag {
-  id: string
+  id: string | number
   name: string
 }
 
 interface Category {
-  id: string
+  id: string | number
   name: string
 }
 
 interface Article {
-  id: string
+  id: string | number
   title: string
-  content: string
+  content?: string
+  excerpt?: string
   coverImage?: string
-  publishedAt: string
+  publishedAt?: string
+  createdAt?: string
   category?: Category
+  categoryName?: string
   tags?: Tag[]
 }
 

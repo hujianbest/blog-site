@@ -1,9 +1,7 @@
 package com.example.writingplatform.engagement;
 
-import org.springframework.stereotype.Service;
 import java.util.List;
 
-@Service
 public class SpamFilterService {
     
     private static final List<String> SPAM_KEYWORDS = List.of(

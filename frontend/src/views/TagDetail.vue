@@ -38,15 +38,16 @@ import LayoutFooter from '../components/layout/Footer.vue'
 import ArticlePreview from '../components/ArticlePreview.vue'
 
 interface Article {
-  id: string
+  id: string | number
   title: string
-  excerpt: string
-  createdAt: string
-  author: {
-    name: string
-  }
-  tags: Array<{
-    id: string
+  content?: string
+  excerpt?: string
+  coverImage?: string
+  publishedAt?: string
+  createdAt?: string
+  categoryName?: string
+  tags?: Array<{
+    id: string | number
     name: string
   }>
 }
@@ -59,10 +60,10 @@ const loading = ref(true)
 onMounted(async () => {
   try {
     const tag = route.params.name as string
-    const response = await fetch(`http://localhost:3000/api/v1/articles?tag=${tag}`)
+    const response = await fetch(`/api/v1/tags/${encodeURIComponent(tag)}/articles`)
     if (response.ok) {
       const data = await response.json()
-      articles.value = data.articles || []
+      articles.value = data.data || data.articles || []
     }
   } catch (error) {
     console.error('Failed to load articles by tag:', error)

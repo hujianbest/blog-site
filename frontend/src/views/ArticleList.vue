@@ -18,6 +18,7 @@
           v-for="article in articles"
           :key="article.id"
           :article="article"
+          @click="handleArticleClick"
         />
       </div>
     </main>
@@ -28,52 +29,61 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import LayoutHeader from '../components/layout/Header.vue'
 import LayoutFooter from '../components/layout/Footer.vue'
 import ArticlePreview from '../components/ArticlePreview.vue'
 
 interface Article {
-  id: string
+  id: string | number
   title: string
-  excerpt: string
-  createdAt: string
-  author: {
+  content?: string
+  excerpt?: string
+  coverImage?: string
+  publishedAt?: string
+  createdAt?: string
+  category?: {
+    id: string | number
     name: string
   }
-  tags: Array<{
-    id: string
+  categoryName?: string
+  tags?: Array<{
+    id: string | number
     name: string
   }>
 }
 
+const router = useRouter()
 const articles = ref<Article[]>([])
 const loading = ref(true)
 
 onMounted(async () => {
   try {
-    const response = await fetch('http://localhost:3000/api/v1/articles?status=published')
-    if (response.ok) {
-      const data = await response.json()
-      articles.value = data.articles || []
+    const response = await fetch('/api/v1/articles?status=PUBLISHED')
+    if (!response.ok) {
+      throw new Error(`Failed to load articles: ${response.status}`)
     }
+
+    const data = await response.json()
+    articles.value = data.data || data.articles || []
   } catch (error) {
-    console.error('Failed to load articles:', error)
+    console.warn('Using fallback articles after load failure:', error)
     // Use mock data
     articles.value = [
       {
         id: '1',
         title: '示例文章 1',
+        content: '这是一篇示例文章的正文内容，用于在后端不可用时保持列表可浏览。',
         excerpt: '这是一篇示例文章的摘要内容...',
-        createdAt: new Date().toISOString(),
-        author: { name: '作者' },
+        publishedAt: new Date().toISOString(),
         tags: [{ id: '1', name: '技术' }]
       },
       {
         id: '2',
         title: '示例文章 2',
+        content: '这是另一篇示例文章的正文内容，用于覆盖 ArticlePreview 对 content 字段的需求。',
         excerpt: '这是另一篇示例文章的摘要内容...',
-        createdAt: new Date(Date.now() - 86400000).toISOString(),
-        author: { name: '作者' },
+        publishedAt: new Date(Date.now() - 86400000).toISOString(),
         tags: [{ id: '2', name: '生活' }]
       }
     ]
@@ -81,6 +91,10 @@ onMounted(async () => {
     loading.value = false
   }
 })
+
+const handleArticleClick = (article: Article) => {
+  router.push(`/articles/${article.id}`)
+}
 
 onMounted(() => {
   document.title = '文章列表 - 我的博客'
