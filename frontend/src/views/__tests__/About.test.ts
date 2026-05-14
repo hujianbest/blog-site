@@ -28,7 +28,7 @@ describe('About.vue', () => {
   it('should render avatar with initials', () => {
     const wrapper = mount(About, { global: { stubs } })
 
-    expect(wrapper.text()).toContain('MB')
+    expect(wrapper.text()).toContain('hujian')
   })
 
   it('should render bio description', () => {

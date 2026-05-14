@@ -14,7 +14,7 @@
                   data-ui="about-avatar"
                   class="w-32 h-32 md:w-48 md:h-48 rounded-full bg-[var(--color-bg-accent-subtle)] border border-[var(--color-border-default)] flex items-center justify-center text-[var(--color-primary-text)] text-4xl md:text-6xl font-bold"
                 >
-                  MB
+                  hujian
                 </div>
               </div>
 
