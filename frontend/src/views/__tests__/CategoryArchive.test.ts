@@ -40,6 +40,7 @@ describe('CategoryArchive.vue', () => {
 
     expect(wrapper.vm.loading).toBe(true)
     expect(wrapper.find('.animate-spin').exists()).toBe(true)
+    expect(wrapper.find('[data-ui-state="loading"]').exists()).toBe(true)
   })
 
   it('should load categories on mount', async () => {
@@ -74,6 +75,7 @@ describe('CategoryArchive.vue', () => {
     await wrapper.vm.$nextTick()
 
     expect(wrapper.text()).toContain('暂无分类')
+    expect(wrapper.find('[data-ui-state="empty"]').exists()).toBe(true)
   })
 
   it('should build category tree correctly', async () => {
@@ -121,6 +123,7 @@ describe('CategoryArchive.vue', () => {
 
     expect(wrapper.text()).toContain('Tech')
     expect(wrapper.text()).toContain('10 篇文章')
+    expect(wrapper.find('[data-ui="category-tree"]').classes()).toContain('bg-[var(--color-bg-surface)]')
   })
 
   it('should render subcategories', async () => {

@@ -35,8 +35,9 @@ describe('About.vue', () => {
     const wrapper = mount(About, { global: { stubs } })
 
     expect(wrapper.text()).toContain('全栈开发者')
-    expect(wrapper.text()).toContain('技术博主')
-    expect(wrapper.text()).toContain('开源爱好者')
+    expect(wrapper.text()).toContain('工程实践')
+    expect(wrapper.text()).toContain('长期思考')
+    expect(wrapper.text()).not.toContain('热爱编程，享受创造的过程')
   })
 
   it('should render social links', () => {
@@ -52,35 +53,21 @@ describe('About.vue', () => {
     expect(emailLink?.exists()).toBe(true)
   })
 
-  it('should render skills section', () => {
+  it('should render editorial topics section', () => {
     const wrapper = mount(About, { global: { stubs } })
 
-    expect(wrapper.text()).toContain('技能栈')
+    expect(wrapper.text()).toContain('写作主题')
+    expect(wrapper.text()).toContain('工程实践')
+    expect(wrapper.text()).toContain('长期思考')
   })
 
-  it('should render frontend skills', () => {
+  it('should avoid generic tool-list filler content', () => {
     const wrapper = mount(About, { global: { stubs } })
 
-    expect(wrapper.text()).toContain('Vue.js')
-    expect(wrapper.text()).toContain('React')
-    expect(wrapper.text()).toContain('TypeScript')
-    expect(wrapper.text()).toContain('Tailwind CSS')
-  })
-
-  it('should render backend skills', () => {
-    const wrapper = mount(About, { global: { stubs } })
-
-    expect(wrapper.text()).toContain('Node.js')
-    expect(wrapper.text()).toContain('Spring Boot')
-    expect(wrapper.text()).toContain('PostgreSQL')
-  })
-
-  it('should render tools', () => {
-    const wrapper = mount(About, { global: { stubs } })
-
-    expect(wrapper.text()).toContain('Git')
-    expect(wrapper.text()).toContain('Docker')
-    expect(wrapper.text()).toContain('VS Code')
+    expect(wrapper.text()).not.toContain('React')
+    expect(wrapper.text()).not.toContain('Docker')
+    expect(wrapper.text()).not.toContain('VS Code')
+    expect(wrapper.text()).not.toContain('CI/CD')
   })
 
   it('should have responsive layout', () => {
@@ -91,11 +78,13 @@ describe('About.vue', () => {
     expect(grid.classes()).toContain('md:grid-cols-2')
   })
 
-  it('should have gradient avatar background', () => {
+  it('should use the editorial token avatar treatment', () => {
     const wrapper = mount(About, { global: { stubs } })
 
-    const avatar = wrapper.find('.from-blue-500')
+    const avatar = wrapper.find('[data-ui="about-avatar"]')
     expect(avatar.exists()).toBe(true)
-    expect(avatar.classes()).toContain('to-purple-600')
+    expect(avatar.classes()).toContain('bg-[var(--color-bg-accent-subtle)]')
+    expect(avatar.classes()).not.toContain('from-blue-500')
+    expect(avatar.classes()).not.toContain('to-purple-600')
   })
 })

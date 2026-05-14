@@ -2,7 +2,7 @@
   <div class="min-h-screen flex flex-col bg-gray-50">
     <Header />
 
-    <main class="py-16 flex-1">
+    <main id="main-content" class="py-16 flex-1">
       <div class="container mx-auto px-4">
         <h1 class="text-4xl font-bold text-gray-900 mb-8">多平台发布</h1>
 

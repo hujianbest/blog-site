@@ -15,7 +15,7 @@ describe('Header.vue', () => {
       }
     })
 
-    expect(wrapper.text()).toContain('My Blog')
+    expect(wrapper.text()).toContain("hujian's bolg")
   })
 
   it('should render desktop navigation links', () => {
@@ -32,6 +32,8 @@ describe('Header.vue', () => {
 
     expect(wrapper.text()).toContain('首页')
     expect(wrapper.text()).toContain('文章')
+    expect(wrapper.text()).toContain('分类')
+    expect(wrapper.text()).toContain('写作')
     expect(wrapper.text()).toContain('关于')
   })
 
@@ -53,8 +55,37 @@ describe('Header.vue', () => {
     const articlesLink = wrapper.findAll('a').find(link => link.text() === '文章')
     expect(articlesLink?.attributes('href')).toBe('/articles')
 
+    const categoriesLink = wrapper.findAll('a').find(link => link.text() === '分类')
+    expect(categoriesLink?.attributes('href')).toBe('/categories')
+
+    const writeLink = wrapper.findAll('a').find(link => link.text() === '写作')
+    expect(writeLink?.attributes('href')).toBe('/write')
+
     const aboutLink = wrapper.findAll('a').find(link => link.text() === '关于')
     expect(aboutLink?.attributes('href')).toBe('/about')
+  })
+
+  it('should use tokenized nav link states without blue utility classes', () => {
+    const wrapper = mount(Header, {
+      global: {
+        stubs: {
+          'router-link': {
+            template: '<a :href="to" :class=\"$attrs.class\"><slot /></a>',
+            props: ['to']
+          }
+        }
+      }
+    })
+
+    const links = wrapper.findAll('a')
+    const navLinks = links.filter(link => ['首页', '文章', '分类', '写作', '关于'].includes(link.text()))
+
+    expect(navLinks.length).toBeGreaterThanOrEqual(5)
+    for (const link of navLinks) {
+      expect(link.classes()).toContain('text-[var(--color-fg-muted)]')
+      expect(link.classes()).toContain('hover:text-[var(--color-primary-text)]')
+      expect(link.attributes('class')).not.toContain('blue-600')
+    }
   })
 
   it('should show mobile menu button on small screens', () => {
@@ -72,6 +103,27 @@ describe('Header.vue', () => {
     const menuButton = wrapper.find('button')
     expect(menuButton.exists()).toBe(true)
     expect(menuButton.attributes('aria-label')).toBe('Toggle menu')
+    expect(menuButton.attributes('aria-controls')).toBe('public-navigation-mobile')
+    expect(menuButton.attributes('aria-expanded')).toBe('false')
+    expect(menuButton.classes()).toContain('min-h-11')
+    expect(menuButton.classes()).toContain('min-w-11')
+  })
+
+  it('should render skip link to main content', () => {
+    const wrapper = mount(Header, {
+      global: {
+        stubs: {
+          'router-link': {
+            template: '<a :href="to"><slot /></a>',
+            props: ['to']
+          }
+        }
+      }
+    })
+
+    const skipLink = wrapper.find('a[href="#main-content"]')
+    expect(skipLink.exists()).toBe(true)
+    expect(skipLink.text()).toContain('跳到正文')
   })
 
   it('should not show mobile menu by default', () => {
@@ -105,6 +157,7 @@ describe('Header.vue', () => {
     await menuButton.trigger('click')
 
     expect(wrapper.vm.mobileMenuOpen).toBe(true)
+    expect(menuButton.attributes('aria-expanded')).toBe('true')
 
     await menuButton.trigger('click')
 
@@ -127,6 +180,8 @@ describe('Header.vue', () => {
 
     expect(wrapper.text()).toContain('首页')
     expect(wrapper.text()).toContain('文章')
+    expect(wrapper.text()).toContain('分类')
+    expect(wrapper.text()).toContain('写作')
     expect(wrapper.text()).toContain('关于')
   })
 
@@ -208,8 +263,9 @@ describe('Header.vue', () => {
     })
 
     const header = wrapper.find('header')
-    expect(header.classes()).toContain('bg-white')
-    expect(header.classes()).toContain('shadow-sm')
+    expect(header.classes()).toContain('bg-[var(--color-bg-surface)]')
+    expect(header.classes()).toContain('border-b')
+    expect(header.classes()).toContain('border-[var(--color-border-default)]')
     expect(header.classes()).toContain('sticky')
   })
 

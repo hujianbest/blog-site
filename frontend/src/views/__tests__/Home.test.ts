@@ -69,8 +69,8 @@ describe('Home.vue', () => {
       }
     })
 
-    expect(wrapper.text()).toContain('欢迎来到我的博客')
-    expect(wrapper.text()).toContain('记录技术探索，分享学习心得')
+    expect(wrapper.text()).toContain('写作、工程与长期思考')
+    expect(wrapper.text()).toContain('记录工程实践、产品判断和个人知识系统')
   })
 
   it('should render latest articles section', () => {
@@ -92,7 +92,33 @@ describe('Home.vue', () => {
 
     const browseButton = wrapper.find('a[href="/articles"]')
     expect(browseButton.exists()).toBe(true)
-    expect(browseButton.text()).toContain('浏览文章')
+    expect(browseButton.text()).toContain('开始阅读')
+  })
+
+  it('should render about author button', () => {
+    const wrapper = mount(Home, {
+      global: {
+        plugins: [router]
+      }
+    })
+
+    const aboutButton = wrapper.find('a[href="/about"]')
+    expect(aboutButton.exists()).toBe(true)
+    expect(aboutButton.text()).toContain('关于作者')
+  })
+
+  it('should use editorial hero tokens without blue purple gradient', () => {
+    const wrapper = mount(Home, {
+      global: {
+        plugins: [router]
+      }
+    })
+
+    const hero = wrapper.find('[data-ui="home-hero"]')
+    expect(hero.exists()).toBe(true)
+    expect(hero.classes()).toContain('bg-[var(--color-bg-accent-subtle)]')
+    expect(hero.attributes('class')).not.toContain('from-blue-600')
+    expect(hero.attributes('class')).not.toContain('to-purple-600')
   })
 
   it('should show loading state initially', () => {
@@ -106,6 +132,7 @@ describe('Home.vue', () => {
 
     expect(wrapper.vm.loading).toBe(true)
     expect(wrapper.find('.animate-spin').exists()).toBe(true)
+    expect(wrapper.find('[data-ui-state="loading"]').classes()).toContain('border-t-[var(--color-primary-text)]')
     expect(wrapper.text()).toContain('加载中')
   })
 
@@ -189,6 +216,8 @@ describe('Home.vue', () => {
     expect(wrapper.vm.articles.length).toBe(0)
     expect(wrapper.vm.loading).toBe(false)
     expect(wrapper.text()).toContain('暂无文章')
+    expect(wrapper.text()).toContain('关于作者')
+    expect(wrapper.find('[data-ui-state="empty"]').exists()).toBe(true)
   })
 
   it('should handle fetch errors gracefully', async () => {
@@ -205,6 +234,29 @@ describe('Home.vue', () => {
 
     expect(wrapper.vm.loading).toBe(false)
     expect(wrapper.vm.articles.length).toBe(0)
+    expect(wrapper.text()).toContain('文章暂时无法加载，请稍后重试。')
+    expect(wrapper.find('[data-ui-state="error"]').exists()).toBe(true)
+  })
+
+  it('should treat non-ok article responses as error state', async () => {
+    vi.mocked(fetch).mockResolvedValue({
+      ok: false,
+      status: 500,
+      json: async () => ({ message: 'Server error' })
+    } as Response)
+
+    const wrapper = mount(Home, {
+      global: {
+        plugins: [router]
+      }
+    })
+
+    await new Promise(resolve => setTimeout(resolve, 100))
+    await wrapper.vm.$nextTick()
+
+    expect(wrapper.vm.loading).toBe(false)
+    expect(wrapper.find('[data-ui-state="error"]').exists()).toBe(true)
+    expect(wrapper.text()).toContain('文章暂时无法加载，请稍后重试。')
   })
 
   it('should navigate to article detail when article clicked', async () => {
@@ -248,19 +300,18 @@ describe('Home.vue', () => {
     const container = wrapper.find('.min-h-screen')
     expect(container.classes()).toContain('flex')
     expect(container.classes()).toContain('flex-col')
-    expect(container.classes()).toContain('bg-gray-50')
+    expect(container.classes()).toContain('bg-[var(--color-bg-page)]')
   })
 
-  it('should have hero section with gradient background', () => {
+  it('should have hero section with editorial surface background', () => {
     const wrapper = mount(Home, {
       global: {
         plugins: [router]
       }
     })
 
-    const hero = wrapper.find('.bg-gradient-to-br')
-    expect(hero.classes()).toContain('from-blue-600')
-    expect(hero.classes()).toContain('to-purple-600')
+    const hero = wrapper.find('[data-ui="home-hero"]')
+    expect(hero.classes()).toContain('bg-[var(--color-bg-accent-subtle)]')
   })
 
   it('should have responsive grid for articles', async () => {

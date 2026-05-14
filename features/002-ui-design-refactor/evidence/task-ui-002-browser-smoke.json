@@ -1,0 +1,240 @@
+{
+  "task": "TASK-UI-002",
+  "baseUrl": "http://127.0.0.1:5176",
+  "results": [
+    {
+      "route": "/",
+      "viewport": "desktop",
+      "appTextLength": 457,
+      "checks": {
+        "app": 1,
+        "mainTarget": 1,
+        "header": 1,
+        "footer": 1,
+        "categoriesNav": 2,
+        "focusable": 14,
+        "headerSurface": true,
+        "headerNoShadow": true,
+        "footerSurface": true,
+        "footerNoDark": true
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\task-ui-002-home-desktop.png",
+      "mobileMenu": null
+    },
+    {
+      "route": "/articles",
+      "viewport": "desktop",
+      "appTextLength": 419,
+      "checks": {
+        "app": 1,
+        "mainTarget": 1,
+        "header": 1,
+        "footer": 1,
+        "categoriesNav": 2,
+        "focusable": 13,
+        "headerSurface": true,
+        "headerNoShadow": true,
+        "footerSurface": true,
+        "footerNoDark": true
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\task-ui-002-articles-desktop.png",
+      "mobileMenu": null
+    },
+    {
+      "route": "/categories",
+      "viewport": "desktop",
+      "appTextLength": 170,
+      "checks": {
+        "app": 1,
+        "mainTarget": 1,
+        "header": 1,
+        "footer": 1,
+        "categoriesNav": 2,
+        "focusable": 16,
+        "headerSurface": true,
+        "headerNoShadow": true,
+        "footerSurface": true,
+        "footerNoDark": true
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\task-ui-002-categories-desktop.png",
+      "mobileMenu": null
+    },
+    {
+      "route": "/about",
+      "viewport": "desktop",
+      "appTextLength": 461,
+      "checks": {
+        "app": 1,
+        "mainTarget": 1,
+        "header": 1,
+        "footer": 1,
+        "categoriesNav": 2,
+        "focusable": 16,
+        "headerSurface": true,
+        "headerNoShadow": true,
+        "footerSurface": true,
+        "footerNoDark": true
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\task-ui-002-about-desktop.png",
+      "mobileMenu": null
+    },
+    {
+      "route": "/login",
+      "viewport": "desktop",
+      "appTextLength": 57,
+      "checks": {
+        "app": 1,
+        "mainTarget": 0,
+        "header": 0,
+        "footer": 0,
+        "categoriesNav": 0,
+        "focusable": 1,
+        "headerSurface": false,
+        "headerNoShadow": true,
+        "footerSurface": false,
+        "footerNoDark": true
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\task-ui-002-login-desktop.png",
+      "mobileMenu": null
+    },
+    {
+      "route": "/",
+      "viewport": "mobile",
+      "appTextLength": 457,
+      "checks": {
+        "app": 1,
+        "mainTarget": 1,
+        "header": 1,
+        "footer": 1,
+        "categoriesNav": 2,
+        "focusable": 14,
+        "headerSurface": true,
+        "headerNoShadow": true,
+        "footerSurface": true,
+        "footerNoDark": true
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\task-ui-002-home-mobile.png",
+      "mobileMenu": {
+        "before": "false",
+        "after": "true",
+        "menuCount": 1,
+        "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\task-ui-002-mobile-nav-open.png"
+      }
+    },
+    {
+      "route": "/articles",
+      "viewport": "mobile",
+      "appTextLength": 419,
+      "checks": {
+        "app": 1,
+        "mainTarget": 1,
+        "header": 1,
+        "footer": 1,
+        "categoriesNav": 2,
+        "focusable": 13,
+        "headerSurface": true,
+        "headerNoShadow": true,
+        "footerSurface": true,
+        "footerNoDark": true
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\task-ui-002-articles-mobile.png",
+      "mobileMenu": null
+    },
+    {
+      "route": "/categories",
+      "viewport": "mobile",
+      "appTextLength": 170,
+      "checks": {
+        "app": 1,
+        "mainTarget": 1,
+        "header": 1,
+        "footer": 1,
+        "categoriesNav": 2,
+        "focusable": 16,
+        "headerSurface": true,
+        "headerNoShadow": true,
+        "footerSurface": true,
+        "footerNoDark": true
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\task-ui-002-categories-mobile.png",
+      "mobileMenu": null
+    },
+    {
+      "route": "/about",
+      "viewport": "mobile",
+      "appTextLength": 461,
+      "checks": {
+        "app": 1,
+        "mainTarget": 1,
+        "header": 1,
+        "footer": 1,
+        "categoriesNav": 2,
+        "focusable": 16,
+        "headerSurface": true,
+        "headerNoShadow": true,
+        "footerSurface": true,
+        "footerNoDark": true
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\task-ui-002-about-mobile.png",
+      "mobileMenu": null
+    },
+    {
+      "route": "/login",
+      "viewport": "mobile",
+      "appTextLength": 57,
+      "checks": {
+        "app": 1,
+        "mainTarget": 0,
+        "header": 0,
+        "footer": 0,
+        "categoriesNav": 0,
+        "focusable": 1,
+        "headerSurface": false,
+        "headerNoShadow": true,
+        "footerSurface": false,
+        "footerNoDark": true
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\task-ui-002-login-mobile.png",
+      "mobileMenu": null
+    }
+  ],
+  "network": [
+    {
+      "route": "/",
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:5176/api/v1/articles?status=PUBLISHED&limit=9",
+      "status": 200
+    },
+    {
+      "route": "/articles",
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:5176/api/v1/articles?status=PUBLISHED",
+      "status": 200
+    },
+    {
+      "route": "/categories",
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:5176/api/v1/categories",
+      "status": 200
+    },
+    {
+      "route": "/",
+      "viewport": "mobile",
+      "url": "http://127.0.0.1:5176/api/v1/articles?status=PUBLISHED&limit=9",
+      "status": 200
+    },
+    {
+      "route": "/articles",
+      "viewport": "mobile",
+      "url": "http://127.0.0.1:5176/api/v1/articles?status=PUBLISHED",
+      "status": 200
+    },
+    {
+      "route": "/categories",
+      "viewport": "mobile",
+      "url": "http://127.0.0.1:5176/api/v1/categories",
+      "status": 200
+    }
+  ],
+  "issues": []
+}

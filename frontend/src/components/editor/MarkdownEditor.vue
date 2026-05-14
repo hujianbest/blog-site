@@ -43,6 +43,7 @@ import { useAutoSave } from '@/utils/autoSave'
 interface Props {
   modelValue?: string
   articleId?: string
+  autoSave?: boolean
 }
 
 interface Emits {
@@ -50,7 +51,9 @@ interface Emits {
   (e: 'save', value: string): void
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  autoSave: true
+})
 const emit = defineEmits<Emits>()
 const message = useMessage()
 
@@ -93,7 +96,9 @@ watch(() => props.modelValue, (newValue) => {
 
 function onInput() {
   emit('update:modelValue', content.value)
-  autoSaveState.triggerAutoSave(content.value)
+  if (props.autoSave !== false) {
+    autoSaveState.triggerAutoSave(content.value)
+  }
 }
 
 async function onKeydown(event: KeyboardEvent) {
@@ -109,7 +114,11 @@ async function onKeydown(event: KeyboardEvent) {
         break
       case 's':
         event.preventDefault()
-        await autoSaveState.manualSave(content.value)
+        if (props.autoSave === false) {
+          emit('save', content.value)
+        } else {
+          await autoSaveState.manualSave(content.value)
+        }
         break
     }
   }
@@ -117,6 +126,10 @@ async function onKeydown(event: KeyboardEvent) {
 
 // Restore draft on mount
 onMounted(() => {
+  if (props.autoSave === false) {
+    return
+  }
+
   const savedDraft = autoSaveState.restoreDraft()
   if (savedDraft && (!content.value || content.value.trim() === '')) {
     content.value = savedDraft

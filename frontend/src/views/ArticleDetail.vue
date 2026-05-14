@@ -1,15 +1,15 @@
 <template>
-  <div class="min-h-screen flex flex-col bg-gray-50">
+  <div class="min-h-screen flex flex-col bg-[var(--color-bg-page)]">
     <ReadingProgress :content-element-id="'article-content'" />
     <Header />
 
-    <main class="py-12 flex-1">
-      <div class="container mx-auto px-4">
-        <div class="max-w-4xl mx-auto">
+    <main id="main-content" class="py-12 flex-1">
+      <div class="ui-page">
+        <div class="ui-reading">
           <!-- Back Button -->
           <router-link
             to="/"
-            class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-8"
+            class="ui-link inline-flex items-center gap-2 mb-8"
           >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
@@ -18,19 +18,23 @@
           </router-link>
 
           <!-- Loading State -->
-          <div v-if="loading" class="text-center py-12">
-            <div class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-gray-300 border-t-blue-600"></div>
+          <div v-if="loading" data-ui-state="loading" class="text-center py-12">
+            <div class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-[var(--color-border-default)] border-t-[var(--color-primary-text)]"></div>
           </div>
 
           <!-- Article Content -->
-          <article v-else-if="article" class="bg-white rounded-lg shadow-lg p-8 md:p-12">
+          <article
+            v-else-if="article"
+            data-ui="article-detail"
+            class="bg-[var(--color-bg-surface)] border border-[var(--color-border-default)] rounded-[var(--radius-lg)] p-8 md:p-12"
+          >
             <!-- Article Header -->
-            <header class="mb-8 pb-8 border-b">
-              <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <header class="mb-8 pb-8 border-b border-[var(--color-border-default)]">
+              <h1 class="text-3xl md:text-4xl font-bold text-[var(--color-fg-default)] mb-4">
                 {{ article.title }}
               </h1>
 
-              <div class="flex flex-wrap items-center gap-4 text-gray-600">
+              <div class="flex flex-wrap items-center gap-4 text-[var(--color-fg-muted)]">
                 <div class="flex items-center gap-2">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -48,7 +52,7 @@
                 <div class="flex items-center gap-2">
                   <button
                     @click="copyLink"
-                    class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors text-sm"
+                    class="ui-button-primary px-4 py-2 text-sm"
                   >
                     {{ copied ? '已复制' : '分享' }}
                   </button>
@@ -60,7 +64,8 @@
                 <span
                   v-for="tag in article.tags"
                   :key="tag.id"
-                  class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm"
+                  data-ui="article-tag"
+                  class="px-3 py-1 bg-[var(--color-bg-accent-subtle)] text-[var(--color-primary-text)] rounded-full text-sm"
                 >
                   #{{ tag.name }}
                 </span>
@@ -70,18 +75,18 @@
             <!-- Article Body -->
             <div
               id="article-content"
-              class="prose prose-lg max-w-none markdown-content"
+              class="ui-reading text-[18px] leading-[1.8] markdown-content"
               v-html="renderedContent"
             />
 
             <!-- Article Navigation -->
-            <nav class="mt-12 pt-8 border-t flex justify-between">
+            <nav class="mt-12 pt-8 border-t border-[var(--color-border-default)] flex justify-between">
               <router-link
                 v-if="previousArticle"
                 :to="`/articles/${previousArticle.id}`"
-                class="flex-1 text-left hover:text-blue-600"
+                class="flex-1 text-left hover:text-[var(--color-primary-text)]"
               >
-                <div class="text-sm text-gray-500">上一篇</div>
+                <div class="text-sm text-[var(--color-fg-muted)]">上一篇</div>
                 <div class="font-medium">{{ previousArticle.title }}</div>
               </router-link>
 
@@ -90,20 +95,20 @@
               <router-link
                 v-if="nextArticle"
                 :to="`/articles/${nextArticle.id}`"
-                class="flex-1 text-right hover:text-blue-600"
+                class="flex-1 text-right hover:text-[var(--color-primary-text)]"
               >
-                <div class="text-sm text-gray-500">下一篇</div>
+                <div class="text-sm text-[var(--color-fg-muted)]">下一篇</div>
                 <div class="font-medium">{{ nextArticle.title }}</div>
               </router-link>
             </nav>
           </article>
 
           <!-- Error State -->
-          <div v-else class="bg-white rounded-lg shadow-lg p-12 text-center">
-            <h2 class="text-2xl font-bold text-gray-900 mb-4">文章未找到</h2>
-            <p class="text-gray-600 mb-6">抱歉，该文章不存在或已被删除。</p>
-            <router-link to="/" class="text-blue-600 hover:text-blue-700">
-              返回首页
+          <div v-else data-ui-state="error" class="ui-surface p-12 text-center">
+            <h2 class="text-2xl font-bold text-[var(--color-fg-default)] mb-4">文章未找到</h2>
+            <p class="text-[var(--color-fg-muted)] mb-6">抱歉，该文章不存在或已被删除。</p>
+            <router-link to="/articles" class="ui-link">
+              返回文章列表
             </router-link>
           </div>
         </div>
@@ -129,6 +134,7 @@ import TOC from '@/components/TOC.vue'
 import MarkdownIt from 'markdown-it'
 import hljs from 'highlight.js'
 import { setMetaTags, generateArticleStructuredData, injectStructuredData } from '@/utils/seo'
+import { getArticleByIdAsync, getPublishedArticlesAsync } from '@/data/content'
 
 interface Tag {
   id: string
@@ -166,16 +172,22 @@ const md = new MarkdownIt({
   highlight: (str, lang) => {
     if (lang && hljs.getLanguage(lang)) {
       try {
-        return `<pre class="hljs"><code>${hljs.highlight(str, { language: lang }).value}</code></pre>`
+        return `<pre class="hljs bg-[var(--color-fg-default)] text-[var(--color-bg-surface)]"><code>${hljs.highlight(str, { language: lang }).value}</code></pre>`
       } catch (__) {}
     }
-    return `<pre class="hljs"><code>${md.utils.escapeHtml(str)}</code></pre>`
+    return `<pre class="hljs bg-[var(--color-fg-default)] text-[var(--color-bg-surface)]"><code>${md.utils.escapeHtml(str)}</code></pre>`
   }
 })
 
-const renderedContent = computed(() => {
+const normalizedContent = computed(() => {
   if (!article.value) return ''
-  return md.render(article.value.content)
+  return article.value.content.replace(/\\n/g, '\n')
+})
+
+const renderedContent = computed(() => {
+  return md.render(normalizedContent.value)
+    .replace(/<h1/g, '<h2')
+    .replace(/<\/h1>/g, '</h2>')
 })
 
 const formatDate = (dateString: string) => {
@@ -208,7 +220,7 @@ const updateSEO = () => {
 
   // Set meta tags
   setMetaTags({
-    title: `${article.value.title} - My Blog`,
+    title: `${article.value.title} - hujian's bolg`,
     description: description,
     ogImage: article.value.coverImage,
     ogType: 'article',
@@ -231,17 +243,13 @@ const loadArticle = async () => {
   try {
     const articleId = route.params.id as string
 
-    const response = await fetch(`/api/v1/articles/${articleId}`)
-    if (response.ok) {
-      const data = await response.json()
-      article.value = data.data
+    article.value = await getArticleByIdAsync(articleId) as Article | null
 
-      // Update SEO after article loads
-      updateSEO()
+    // Update SEO after article loads
+    updateSEO()
 
-      // Load adjacent articles
-      await loadAdjacentArticles()
-    }
+    // Load adjacent articles
+    loadAdjacentArticles()
   } catch (error) {
     console.error('Failed to load article:', error)
   } finally {
@@ -251,12 +259,8 @@ const loadArticle = async () => {
 
 const loadAdjacentArticles = async () => {
   try {
-    const response = await fetch('/api/v1/articles?status=PUBLISHED&limit=100')
-    if (response.ok) {
-      const data = await response.json()
-      const articles = data.data || []
-
-      const currentIndex = articles.findIndex((a: Article) => a.id === article.value?.id)
+      const articles = await getPublishedArticlesAsync()
+      const currentIndex = articles.findIndex((a) => String(a.id) === String(article.value?.id))
 
       if (currentIndex > 0) {
         previousArticle.value = articles[currentIndex - 1]
@@ -265,13 +269,19 @@ const loadAdjacentArticles = async () => {
       if (currentIndex < articles.length - 1) {
         nextArticle.value = articles[currentIndex + 1]
       }
-    }
   } catch (error) {
     console.error('Failed to load adjacent articles:', error)
   }
 }
 
 onMounted(() => {
+  loadArticle()
+})
+
+watch(() => route.params.id, () => {
+  article.value = null
+  previousArticle.value = null
+  nextArticle.value = null
   loadArticle()
 })
 
@@ -313,31 +323,32 @@ watch(article, () => {
 }
 
 .markdown-content code {
-  background-color: #f3f4f6;
+  background-color: var(--color-bg-accent-subtle);
   padding: 0.2rem 0.4rem;
-  border-radius: 0.25rem;
+  border-radius: var(--radius-sm);
   font-size: 0.875em;
 }
 
 .markdown-content pre {
   margin-bottom: 1.5rem;
   padding: 1rem;
-  background-color: #1f2937;
-  border-radius: 0.5rem;
+  background-color: var(--color-fg-default);
+  color: var(--color-bg-surface);
+  border-radius: var(--radius-md);
   overflow-x: auto;
 }
 
 .markdown-content pre code {
   background-color: transparent;
   padding: 0;
-  color: #f3f4f6;
+  color: var(--color-bg-surface);
 }
 
 .markdown-content blockquote {
-  border-left: 4px solid #3b82f6;
+  border-left: 4px solid var(--color-primary-text);
   padding-left: 1rem;
   margin-bottom: 1.25rem;
-  color: #4b5563;
+  color: var(--color-fg-muted);
   font-style: italic;
 }
 
@@ -359,12 +370,12 @@ watch(article, () => {
 }
 
 .markdown-content a {
-  color: #3b82f6;
+  color: var(--color-primary-text);
   text-decoration: underline;
 }
 
 .markdown-content a:hover {
-  color: #2563eb;
+  color: var(--color-primary-hover);
 }
 
 .markdown-content table {
@@ -375,13 +386,13 @@ watch(article, () => {
 
 .markdown-content th,
 .markdown-content td {
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-border-default);
   padding: 0.75rem;
   text-align: left;
 }
 
 .markdown-content th {
-  background-color: #f9fafb;
+  background-color: var(--color-bg-accent-subtle);
   font-weight: 600;
 }
 </style>

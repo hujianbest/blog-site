@@ -1,0 +1,165 @@
+# Progress: UI Design Refactor
+
+## Goal
+
+- Goal: Redesign the blog-site frontend UI with a concrete visual system and implementation contracts before refactoring code.
+- Owner: product / engineering
+- Status: complete
+- Last Updated: 2026-05-13
+
+## Current Workflow State
+
+- Current Stage: `hf-finalize`
+- Workflow Profile: `full`
+- Execution Mode: `auto`
+- Current Active Feature: `features/002-ui-design-refactor/`
+- Current Active Task: `N/A - all approved tasks complete`
+- Pending Reviews And Gates: none
+- Relevant Files:
+  - `features/002-ui-design-refactor/ui-design.md`
+  - `frontend/src/style.css`
+  - `frontend/src/views/Home.vue`
+  - `frontend/src/components/layout/Header.vue`
+  - `frontend/src/components/ArticlePreview.vue`
+  - `frontend/src/views/ArticleDetail.vue`
+  - `frontend/src/views/Login.vue`
+  - `frontend/src/views/Register.vue`
+- Constraints:
+  - Do not start code refactoring before UI review / approval.
+  - Preserve existing Vue 3 + Vite + Tailwind + Naive UI stack unless a later approved design task changes it.
+  - Use the latest HF UI Implementation Contract rules for every critical UI surface.
+
+## Progress Notes
+
+- What Changed:
+  - Created a dedicated feature to track the UI redesign separately from `001-personal-writing-platform`.
+  - Started from `hf-ui-design` because the existing implementation and old UI design are visibly misaligned.
+  - Ran `hf-ui-review`; verdict was `需修改`, then returned to `hf-ui-design` to address findings.
+  - UI review passed on R3 and design was auto-approved for task planning.
+  - Began `TASK-UI-001` by adding Editorial Studio design tokens and global utility classes to `frontend/src/style.css`.
+  - Completed `TASK-UI-001` implementation handoff with focused tests, Vite build, and browser smoke evidence.
+  - Addressed `hf-test-review` findings by adding design-token tests, RED/GREEN evidence, spacing tokens, and stronger browser token assertions.
+- Evidence Paths:
+  - `features/002-ui-design-refactor/ui-design.md`
+  - `features/002-ui-design-refactor/reviews/ui-review-2026-05-13-r3.md`
+  - `features/002-ui-design-refactor/approvals/design-approval-2026-05-13.md`
+  - `features/002-ui-design-refactor/tasks.md`
+  - `features/002-ui-design-refactor/task-board.md`
+  - `features/002-ui-design-refactor/reviews/tasks-review-2026-05-13-r2.md`
+  - `features/002-ui-design-refactor/approvals/tasks-approval-2026-05-13.md`
+  - `frontend/src/style.css`
+  - `features/002-ui-design-refactor/evidence/task-ui-001-implementation-handoff.md`
+  - `features/002-ui-design-refactor/evidence/task-ui-001-browser-smoke.json`
+  - `frontend/src/__tests__/design-tokens.test.ts`
+  - `features/002-ui-design-refactor/reviews/test-review-task-ui-001-2026-05-13-r2.md`
+  - `features/002-ui-design-refactor/reviews/code-review-task-ui-001-2026-05-13-r2.md`
+  - `features/002-ui-design-refactor/reviews/traceability-review-task-ui-001-2026-05-13-r2.md`
+  - `features/002-ui-design-refactor/verification/regression-task-ui-001-2026-05-13.md`
+  - `features/002-ui-design-refactor/verification/completion-task-ui-001-2026-05-13.md`
+  - `features/002-ui-design-refactor/evidence/task-ui-002-implementation-handoff.md`
+  - `features/002-ui-design-refactor/evidence/task-ui-002-browser-smoke.json`
+  - `features/002-ui-design-refactor/reviews/test-review-task-ui-002-2026-05-13.md`
+  - `features/002-ui-design-refactor/reviews/code-review-task-ui-002-2026-05-13-r2.md`
+  - `features/002-ui-design-refactor/reviews/traceability-review-task-ui-002-2026-05-13.md`
+  - `features/002-ui-design-refactor/verification/regression-task-ui-002-2026-05-13.md`
+  - `features/002-ui-design-refactor/verification/completion-task-ui-002-2026-05-13.md`
+  - `features/002-ui-design-refactor/evidence/task-ui-003-implementation-handoff.md`
+  - `features/002-ui-design-refactor/evidence/task-ui-003-browser-smoke.json`
+  - `features/002-ui-design-refactor/reviews/test-review-task-ui-003-2026-05-13-r2.md`
+  - `features/002-ui-design-refactor/reviews/code-review-task-ui-003-2026-05-13-r2.md`
+  - `features/002-ui-design-refactor/reviews/traceability-review-task-ui-003-2026-05-13.md`
+  - `features/002-ui-design-refactor/verification/regression-task-ui-003-2026-05-13.md`
+  - `features/002-ui-design-refactor/verification/completion-task-ui-003-2026-05-13.md`
+  - `features/002-ui-design-refactor/evidence/task-ui-004-implementation-handoff.md`
+  - `features/002-ui-design-refactor/evidence/task-ui-004-browser-smoke.json`
+  - `features/002-ui-design-refactor/reviews/test-review-task-ui-004-2026-05-13.md`
+  - `features/002-ui-design-refactor/reviews/code-review-task-ui-004-2026-05-13-r2.md`
+  - `features/002-ui-design-refactor/reviews/code-review-task-ui-004-2026-05-13-r3.md`
+  - `features/002-ui-design-refactor/reviews/traceability-review-task-ui-004-2026-05-13.md`
+  - `features/002-ui-design-refactor/verification/regression-task-ui-004-2026-05-13.md`
+  - `features/002-ui-design-refactor/verification/completion-task-ui-004-2026-05-13.md`
+  - `features/002-ui-design-refactor/evidence/task-ui-005-implementation-handoff.md`
+  - `features/002-ui-design-refactor/evidence/task-ui-005-browser-smoke.json`
+  - `features/002-ui-design-refactor/reviews/test-review-task-ui-005-2026-05-13-r2.md`
+  - `features/002-ui-design-refactor/reviews/code-review-task-ui-005-2026-05-13-r2.md`
+  - `features/002-ui-design-refactor/reviews/traceability-review-task-ui-005-2026-05-13.md`
+  - `features/002-ui-design-refactor/verification/regression-task-ui-005-2026-05-13.md`
+  - `features/002-ui-design-refactor/verification/completion-task-ui-005-2026-05-13.md`
+  - `features/002-ui-design-refactor/evidence/task-ui-006-implementation-handoff.md`
+  - `features/002-ui-design-refactor/evidence/task-ui-006-browser-smoke.json`
+  - `features/002-ui-design-refactor/reviews/test-review-task-ui-006-2026-05-13.md`
+  - `features/002-ui-design-refactor/reviews/code-review-task-ui-006-2026-05-13-r2.md`
+  - `features/002-ui-design-refactor/reviews/traceability-review-task-ui-006-2026-05-13.md`
+  - `features/002-ui-design-refactor/verification/regression-task-ui-006-2026-05-13.md`
+  - `features/002-ui-design-refactor/verification/completion-task-ui-006-2026-05-13.md`
+  - `features/002-ui-design-refactor/evidence/task-ui-007-implementation-handoff.md`
+  - `features/002-ui-design-refactor/evidence/task-ui-007-browser-smoke.json`
+  - `features/002-ui-design-refactor/reviews/test-review-task-ui-007-2026-05-14.md`
+  - `features/002-ui-design-refactor/reviews/code-review-task-ui-007-2026-05-14.md`
+  - `features/002-ui-design-refactor/reviews/traceability-review-task-ui-007-2026-05-14.md`
+  - `features/002-ui-design-refactor/verification/regression-task-ui-007-2026-05-14.md`
+  - `features/002-ui-design-refactor/verification/completion-task-ui-007-2026-05-14.md`
+  - `features/002-ui-design-refactor/evidence/task-ui-008-implementation-handoff.md`
+  - `features/002-ui-design-refactor/evidence/ui-conformance-smoke-output.json`
+  - `features/002-ui-design-refactor/reviews/test-review-task-ui-008-2026-05-14.md`
+  - `features/002-ui-design-refactor/reviews/code-review-task-ui-008-2026-05-14.md`
+  - `features/002-ui-design-refactor/reviews/traceability-review-task-ui-008-2026-05-14.md`
+  - `features/002-ui-design-refactor/verification/regression-task-ui-008-2026-05-14.md`
+  - `features/002-ui-design-refactor/verification/completion-task-ui-008-2026-05-14.md`
+  - `features/002-ui-design-refactor/closeout.md`
+- Session Log:
+  - 2026-05-13: Started UI design refactor feature after current UI was judged generic and not effectively governed by prior UI design workflow.
+  - 2026-05-13: `hf-ui-review` record created at `features/002-ui-design-refactor/reviews/ui-review-2026-05-13.md`.
+  - 2026-05-13: UI design approved in auto mode; entering `hf-tasks`.
+  - 2026-05-13: Drafted UI refactor task plan and task board.
+  - 2026-05-13: Tasks review passed on R2 and task plan was auto-approved; entering `hf-test-driven-dev` for `TASK-UI-001`.
+  - 2026-05-13: `TASK-UI-001` implementation started with global token foundation.
+  - 2026-05-13: `TASK-UI-001` implementation evidence generated; moving to `hf-test-review`.
+  - 2026-05-13: `hf-test-review` returned `需修改`; token tests and smoke evidence were strengthened, then focused tests/build/browser smoke passed.
+  - 2026-05-13: `hf-test-review` passed on R2; entering `hf-code-review`.
+  - 2026-05-13: `hf-code-review` passed on R2; entering `hf-traceability-review`.
+  - 2026-05-13: `hf-traceability-review`, regression gate, and completion gate passed for `TASK-UI-001`; router selected unique next-ready task `TASK-UI-002`.
+  - 2026-05-13: `TASK-UI-002` RED tests added and implementation started for Header/Footer/About. Relevant tests and Vite build are green; browser evidence/reviews still pending.
+  - 2026-05-13: `TASK-UI-002` browser evidence generated; moving to `hf-test-review`.
+  - 2026-05-13: `hf-test-review` passed for `TASK-UI-002`; entering `hf-code-review`.
+  - 2026-05-13: `hf-code-review` passed for `TASK-UI-002`; entering `hf-traceability-review`.
+  - 2026-05-13: `TASK-UI-002` traceability, regression, and completion gates passed; router selected `TASK-UI-003`.
+  - 2026-05-13: `TASK-UI-003` Home hero implementation completed with RED/GREEN tests, build, and browser smoke; entering `hf-test-review`.
+  - 2026-05-13: `hf-test-review` passed for `TASK-UI-003`; entering `hf-code-review`.
+  - 2026-05-13: `hf-code-review` passed for `TASK-UI-003`; entering `hf-traceability-review`.
+  - 2026-05-13: `TASK-UI-003` traceability, regression, and completion gates passed; router selected `TASK-UI-004`.
+  - 2026-05-13: `TASK-UI-004` article/discovery implementation completed; API permit gap fixed; browser smoke passed.
+  - 2026-05-13: `TASK-UI-004` test/code/traceability reviews and regression/completion gates passed; router selected `TASK-UI-005`.
+  - 2026-05-13: `TASK-UI-005` article detail implementation completed with RED/GREEN tests, build, and browser smoke.
+  - 2026-05-13: `hf-test-review` passed for `TASK-UI-005`; entering `hf-code-review`.
+  - 2026-05-13: `hf-code-review` passed for `TASK-UI-005`; entering `hf-traceability-review`.
+  - 2026-05-13: `TASK-UI-005` traceability, regression, and completion gates passed; router selected `TASK-UI-006`.
+  - 2026-05-13: `TASK-UI-006` implementation completed with route reload/retry tests, build, and browser smoke.
+  - 2026-05-13: `hf-test-review` passed for `TASK-UI-006`; entering `hf-code-review`.
+  - 2026-05-13: `hf-code-review` passed for `TASK-UI-006`; entering `hf-traceability-review`.
+  - 2026-05-13: `TASK-UI-006` traceability, regression, and completion gates passed; router selected `TASK-UI-007`.
+  - 2026-05-14: `TASK-UI-007` auth visual surface implemented with tests, build, and browser smoke.
+  - 2026-05-14: `TASK-UI-007` reviews and gates completed; router selected final `TASK-UI-008`.
+  - 2026-05-14: `TASK-UI-008` final UI conformance smoke passed; all approved tasks complete.
+  - 2026-05-14: Closeout completed.
+  - 2026-05-13: `hf-test-review` and `hf-code-review` passed for `TASK-UI-004`; entering `hf-traceability-review`.
+  - 2026-05-13: `hf-test-review` passed for `TASK-UI-004`; entering `hf-code-review`.
+- Open Risks:
+  - Auto mode uses Editorial Studio as the current working direction; final product approval can still adjust brand tone before implementation.
+  - Existing code uses raw Tailwind blue/gray utilities and gradients; implementation will need token mapping and visual conformance evidence.
+
+## Optional Coordination Fields
+
+- Task Board Path: `features/002-ui-design-refactor/task-board.md`
+- Task Queue Notes: To be created by `hf-tasks`.
+- Workspace Isolation: `in-place`
+- Worktree Path:
+- Worktree Branch:
+
+## Next Step
+
+- Next Action Or Recommended Skill: commit / PR preparation
+- Blockers:
+  - None.
+- Notes:
+  - This feature intentionally starts from UI design and does not edit frontend implementation code yet.

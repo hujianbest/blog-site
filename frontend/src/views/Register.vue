@@ -1,25 +1,26 @@
 <template>
-  <div class="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+  <div data-ui="auth-page" class="min-h-screen bg-[var(--color-bg-page)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full space-y-8">
       <div>
-        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+        <h2 class="mt-6 text-center text-3xl font-extrabold text-[var(--color-fg-default)]">
           创建新账号
         </h2>
-        <p class="mt-2 text-center text-sm text-gray-600">
+        <p class="mt-2 text-center text-sm text-[var(--color-fg-muted)]">
           或
-          <router-link to="/login" class="font-medium text-primary-600 hover:text-primary-500">
+          <router-link to="/login" class="ui-link font-medium">
             已有账号？登录
           </router-link>
         </p>
       </div>
 
-      <n-card class="mt-8">
+      <section data-ui="auth-card" class="ui-surface mt-8 p-6">
         <n-form ref="formRef" :model="formValue" :rules="rules" size="large">
           <!-- Name -->
           <n-form-item label="姓名" path="name">
             <n-input
               v-model:value="formValue.name"
               placeholder="您的姓名"
+              :input-props="{ autocomplete: 'name' }"
               @keydown.enter="handleRegister"
             />
           </n-form-item>
@@ -29,6 +30,7 @@
             <n-input
               v-model:value="formValue.email"
               placeholder="your@email.com"
+              :input-props="{ autocomplete: 'email' }"
               @keydown.enter="handleRegister"
             />
           </n-form-item>
@@ -39,6 +41,7 @@
               v-model:value="formValue.password"
               type="password"
               placeholder="至少6个字符"
+              :input-props="{ autocomplete: 'new-password' }"
               show-password-on="click"
               @keydown.enter="handleRegister"
             />
@@ -50,13 +53,19 @@
               v-model:value="formValue.confirmPassword"
               type="password"
               placeholder="再次输入密码"
+              :input-props="{ autocomplete: 'new-password' }"
               show-password-on="click"
               @keydown.enter="handleRegister"
             />
           </n-form-item>
 
           <!-- Error Message -->
-          <n-alert v-if="errorMessage" type="error" class="mb-4">
+          <n-alert
+            v-if="errorMessage"
+            type="error"
+            data-ui-state="error"
+            class="mb-4 border border-[var(--color-danger)]"
+          >
             {{ errorMessage }}
           </n-alert>
 
@@ -64,16 +73,17 @@
           <div class="flex items-center justify-between">
             <n-button
               type="primary"
+              data-ui="auth-submit"
               @click="handleRegister"
               :loading="loading"
               size="large"
-              class="flex-1"
+              class="ui-button-primary flex-1"
             >
               注册
             </n-button>
           </div>
         </n-form>
-      </n-card>
+      </section>
     </div>
   </div>
 </template>
@@ -81,7 +91,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useMessage } from 'naive-ui'
+import { NAlert, NButton, NForm, NFormItem, NInput, useMessage } from 'naive-ui'
 import { useAuthStore } from '../stores/auth'
 
 const router = useRouter()

@@ -1,19 +1,30 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
+  <div class="min-h-screen bg-[var(--color-bg-page)]">
     <LayoutHeader />
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <h1 class="text-3xl font-bold text-gray-900 mb-8">文章列表</h1>
+    <main id="main-content" class="ui-page py-12">
+      <h1 class="text-3xl font-bold text-[var(--color-fg-default)] mb-3">文章列表</h1>
+      <p class="text-[var(--color-fg-muted)] mb-8">按时间浏览近期文章，继续沿着主题和标签探索。</p>
 
-      <div v-if="loading" class="text-center py-12">
-        <p class="text-gray-600">加载中...</p>
+      <div v-if="loading" data-ui-state="loading" class="text-center py-12">
+        <p class="text-[var(--color-fg-muted)]">加载中...</p>
       </div>
 
-      <div v-else-if="articles.length === 0" class="text-center py-12">
-        <p class="text-gray-600">暂无文章</p>
+      <div v-else-if="errorMessage" data-ui-state="error" class="ui-surface text-center py-10 px-6">
+        <p class="text-[var(--color-danger)] font-medium">{{ errorMessage }}</p>
+        <button class="ui-link mt-4 inline-flex font-semibold" type="button" @click="loadArticles">
+          重新加载
+        </button>
       </div>
 
-      <div v-else class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+      <div v-else-if="articles.length === 0" data-ui-state="empty" class="ui-surface text-center py-10 px-6">
+        <p class="text-[var(--color-fg-muted)]">暂无文章。你可以稍后回来，或先查看分类归档。</p>
+        <router-link to="/categories" class="ui-link mt-4 inline-flex font-semibold">
+          浏览分类
+        </router-link>
+      </div>
+
+      <div v-else class="grid gap-6">
         <ArticlePreview
           v-for="article in articles"
           :key="article.id"
@@ -33,6 +44,7 @@ import { useRouter } from 'vue-router'
 import LayoutHeader from '../components/layout/Header.vue'
 import LayoutFooter from '../components/layout/Footer.vue'
 import ArticlePreview from '../components/ArticlePreview.vue'
+import { getPublishedArticlesAsync } from '@/data/content'
 
 interface Article {
   id: string | number
@@ -56,40 +68,23 @@ interface Article {
 const router = useRouter()
 const articles = ref<Article[]>([])
 const loading = ref(true)
+const errorMessage = ref('')
 
-onMounted(async () => {
+const loadArticles = async () => {
+  loading.value = true
+  errorMessage.value = ''
   try {
-    const response = await fetch('/api/v1/articles?status=PUBLISHED')
-    if (!response.ok) {
-      throw new Error(`Failed to load articles: ${response.status}`)
-    }
-
-    const data = await response.json()
-    articles.value = data.data || data.articles || []
+    articles.value = await getPublishedArticlesAsync()
   } catch (error) {
-    console.warn('Using fallback articles after load failure:', error)
-    // Use mock data
-    articles.value = [
-      {
-        id: '1',
-        title: '示例文章 1',
-        content: '这是一篇示例文章的正文内容，用于在后端不可用时保持列表可浏览。',
-        excerpt: '这是一篇示例文章的摘要内容...',
-        publishedAt: new Date().toISOString(),
-        tags: [{ id: '1', name: '技术' }]
-      },
-      {
-        id: '2',
-        title: '示例文章 2',
-        content: '这是另一篇示例文章的正文内容，用于覆盖 ArticlePreview 对 content 字段的需求。',
-        excerpt: '这是另一篇示例文章的摘要内容...',
-        publishedAt: new Date(Date.now() - 86400000).toISOString(),
-        tags: [{ id: '2', name: '生活' }]
-      }
-    ]
+    console.error('Failed to load articles:', error)
+    errorMessage.value = '文章列表暂时无法加载，请稍后重试。'
   } finally {
     loading.value = false
   }
+}
+
+onMounted(() => {
+  loadArticles()
 })
 
 const handleArticleClick = (article: Article) => {

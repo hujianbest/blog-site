@@ -29,7 +29,7 @@ describe('ArticlePreview.vue', () => {
       props: { article: mockArticle }
     })
 
-    const excerpt = wrapper.find('.text-gray-600.mb-4')
+    const excerpt = wrapper.find('[data-ui="article-excerpt"]')
     expect(excerpt.text()).not.toContain('#')
     expect(excerpt.text()).not.toContain('**')
     expect(excerpt.text()).toContain('This is a test article')
@@ -52,6 +52,22 @@ describe('ArticlePreview.vue', () => {
     expect(wrapper.text()).toContain('2026')
   })
 
+  it('should normalize escaped newline content from API fixtures', () => {
+    const wrapper = mount(ArticlePreview, {
+      props: {
+        article: {
+          ...mockArticle,
+          content: 'First line\\n\\nSecond line'
+        }
+      }
+    })
+
+    const excerpt = wrapper.find('[data-ui="article-excerpt"]')
+    expect(excerpt.text()).toContain('First line')
+    expect(excerpt.text()).toContain('Second line')
+    expect(excerpt.text()).not.toContain('\\n')
+  })
+
   it('should truncate long content to 150 characters', () => {
     const longContent = '# Test\n\n'.repeat(50)
     const wrapper = mount(ArticlePreview, {
@@ -63,7 +79,7 @@ describe('ArticlePreview.vue', () => {
       }
     })
 
-    const excerpt = wrapper.find('.text-gray-600.mb-4')
+    const excerpt = wrapper.find('[data-ui="article-excerpt"]')
     expect(excerpt.text().length).toBe(153) // 150 + '...'
     expect(excerpt.text()).toContain('...')
   })
@@ -172,6 +188,21 @@ describe('ArticlePreview.vue', () => {
     expect(wrapper.emitted('click')?.[0]).toEqual([mockArticle])
   })
 
+  it('should be keyboard accessible', async () => {
+    const wrapper = mount(ArticlePreview, {
+      props: { article: mockArticle }
+    })
+
+    const article = wrapper.find('article')
+    expect(article.attributes('role')).toBe('link')
+    expect(article.attributes('tabindex')).toBe('0')
+
+    await article.trigger('keydown.enter')
+    await article.trigger('keydown.space')
+
+    expect(wrapper.emitted('click')?.length).toBe(2)
+  })
+
   it('should not render tags when empty array provided', () => {
     const wrapper = mount(ArticlePreview, {
       props: {
@@ -191,8 +222,30 @@ describe('ArticlePreview.vue', () => {
     })
 
     const article = wrapper.find('article')
-    expect(article.classes()).toContain('bg-white')
-    expect(article.classes()).toContain('rounded-lg')
-    expect(article.classes()).toContain('shadow')
+    expect(article.classes()).toContain('bg-[var(--color-bg-surface)]')
+    expect(article.classes()).toContain('border')
+    expect(article.classes()).toContain('border-[var(--color-border-default)]')
+    expect(article.classes()).toContain('rounded-[var(--radius-lg)]')
+    expect(article.classes()).not.toContain('bg-white')
+    expect(article.classes()).not.toContain('shadow')
+  })
+
+  it('should use tokenized title, metadata, and tag styles', () => {
+    const wrapper = mount(ArticlePreview, {
+      props: { article: mockArticle }
+    })
+
+    const title = wrapper.find('[data-ui="article-title"]')
+    expect(title.classes()).toContain('text-[var(--color-fg-default)]')
+    expect(title.classes()).toContain('hover:text-[var(--color-primary-text)]')
+    expect(title.attributes('class')).not.toContain('blue-600')
+
+    const meta = wrapper.find('[data-ui="article-meta"]')
+    expect(meta.classes()).toContain('text-[var(--color-fg-muted)]')
+
+    const tag = wrapper.find('[data-ui="article-tag"]')
+    expect(tag.classes()).toContain('bg-[var(--color-bg-accent-subtle)]')
+    expect(tag.classes()).toContain('text-[var(--color-primary-text)]')
+    expect(tag.attributes('class')).not.toContain('bg-gray-100')
   })
 })

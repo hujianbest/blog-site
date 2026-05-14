@@ -1,0 +1,59 @@
+{
+  "task": "TASK-UI-005",
+  "route": "/articles/1",
+  "results": [
+    {
+      "viewport": "desktop",
+      "checks": {
+        "app": 1,
+        "main": 1,
+        "article": 1,
+        "articleSurface": true,
+        "content": 1,
+        "readingWidth": true,
+        "readingRhythm": true,
+        "noLiteralEscapedNewlines": true,
+        "h1": 1
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\task-ui-005-article-detail-desktop.png"
+    },
+    {
+      "viewport": "mobile",
+      "checks": {
+        "app": 1,
+        "main": 1,
+        "article": 1,
+        "articleSurface": true,
+        "content": 1,
+        "readingWidth": true,
+        "readingRhythm": true,
+        "noLiteralEscapedNewlines": true,
+        "h1": 1
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\task-ui-005-article-detail-mobile.png"
+    }
+  ],
+  "network": [
+    {
+      "url": "http://127.0.0.1:5176/api/v1/articles/1",
+      "status": 200,
+      "viewport": "desktop"
+    },
+    {
+      "url": "http://127.0.0.1:5176/api/v1/articles?status=PUBLISHED&limit=100",
+      "status": 200,
+      "viewport": "desktop"
+    },
+    {
+      "url": "http://127.0.0.1:5176/api/v1/articles/1",
+      "status": 200,
+      "viewport": "mobile"
+    },
+    {
+      "url": "http://127.0.0.1:5176/api/v1/articles?status=PUBLISHED&limit=100",
+      "status": 200,
+      "viewport": "mobile"
+    }
+  ],
+  "issues": []
+}

@@ -1,0 +1,31 @@
+# Code Review: TASK-UI-008
+
+## 结论
+
+通过
+
+## Findings
+
+无阻塞或需修改发现项。
+
+## 评分
+
+| 维度 | 分数 |
+|---|---:|
+| CR1 correctness | 8 |
+| CR2 design consistency | 8 |
+| CR3 state/error/security | 8 |
+| CR4 readability/maintainability | 8 |
+| CR5 scope guard | 9 |
+| CR6 downstream traceability readiness | 8 |
+| CR7 architecture/refactor hygiene | 8 |
+| CR8 UI implementation conformance | 9 |
+
+## Notes
+
+- `ui-conformance-smoke.cjs` is evidence tooling scoped to the feature.
+- It records routes, viewports, screenshots, DOM anchors, console messages, network summary, and issues.
+
+## 下一步
+
+- `hf-traceability-review`

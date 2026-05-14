@@ -23,6 +23,7 @@ describe('Footer.vue', () => {
     expect(wrapper.text()).toContain('快速链接')
     expect(wrapper.text()).toContain('首页')
     expect(wrapper.text()).toContain('文章')
+    expect(wrapper.text()).toContain('分类')
     expect(wrapper.text()).toContain('关于')
   })
 
@@ -38,11 +39,27 @@ describe('Footer.vue', () => {
     const links = wrapper.findAll('a')
     const homeLink = links.find(link => link.text() === '首页')
     const articlesLink = links.find(link => link.text() === '文章')
+    const categoriesLink = links.find(link => link.text() === '分类')
     const aboutLink = links.find(link => link.text() === '关于')
 
     expect(homeLink?.attributes('href')).toBe('/')
     expect(articlesLink?.attributes('href')).toBe('/articles')
+    expect(categoriesLink?.attributes('href')).toBe('/categories')
     expect(aboutLink?.attributes('href')).toBe('/about')
+  })
+
+  it('should use tokenized footer links without dark-theme drift', () => {
+    const wrapper = mount(Footer, { global: { stubs } })
+
+    const footer = wrapper.find('footer')
+    expect(footer.attributes('class')).not.toContain('bg-gray-900')
+    expect(footer.attributes('class')).not.toContain('text-white')
+
+    const links = wrapper.findAll('a')
+    expect(links.length).toBeGreaterThan(0)
+    for (const link of links) {
+      expect(link.attributes('class')).toContain('hover:text-[var(--color-primary-text)]')
+    }
   })
 
   it('should render GitHub link with correct attributes', () => {
@@ -76,15 +93,16 @@ describe('Footer.vue', () => {
 
     const currentYear = new Date().getFullYear()
     expect(wrapper.text()).toContain(currentYear.toString())
-    expect(wrapper.text()).toContain('My Blog. All rights reserved')
+    expect(wrapper.text()).toContain("hujian's bolg. All rights reserved")
   })
 
   it('should have correct CSS classes for footer', () => {
     const wrapper = mount(Footer, { global: { stubs } })
 
     const footer = wrapper.find('footer')
-    expect(footer.classes()).toContain('bg-gray-900')
-    expect(footer.classes()).toContain('text-white')
+    expect(footer.classes()).toContain('bg-[var(--color-bg-surface)]')
+    expect(footer.classes()).toContain('text-[var(--color-fg-muted)]')
+    expect(footer.classes()).toContain('border-t')
     expect(footer.classes()).toContain('mt-auto')
   })
 
@@ -99,9 +117,12 @@ describe('Footer.vue', () => {
   it('should have copyright section with border', () => {
     const wrapper = mount(Footer, { global: { stubs } })
 
-    const copyright = wrapper.find('.border-t')
-    expect(copyright.classes()).toContain('border-gray-800')
-    expect(copyright.classes()).toContain('text-center')
+    const copyright = wrapper.findAll('.border-t').find(element =>
+      element.classes().includes('mt-8')
+    )
+    expect(copyright).toBeTruthy()
+    expect(copyright?.classes()).toContain('border-[var(--color-border-default)]')
+    expect(copyright?.classes()).toContain('text-center')
   })
 
   it('should have SVG icons for social links', () => {

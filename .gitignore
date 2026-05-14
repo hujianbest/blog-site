@@ -49,3 +49,6 @@ backend/uploads/*
 
 # Prisma
 backend/prisma/migrations/**/migration.sql
+/.cursor/
+/.harnessflow-install-manifest.json
+/.harnessflow-install-readme.md

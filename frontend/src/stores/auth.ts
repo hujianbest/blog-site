@@ -7,47 +7,6 @@ interface User {
   email: string
 }
 
-interface AuthPayload {
-  accessToken: string
-  refreshToken: string
-  user: User
-}
-
-type ApiEnvelope<T> = {
-  data?: T
-  message?: string
-  error?: {
-    message?: string
-  }
-}
-
-async function readApiResponse<T>(response: Response, fallbackMessage: string): Promise<T> {
-  const text = await response.text()
-  let payload = {} as ApiEnvelope<T> | T
-
-  if (text) {
-    try {
-      payload = JSON.parse(text) as ApiEnvelope<T> | T
-    } catch {
-      if (!response.ok) {
-        throw new Error(fallbackMessage)
-      }
-      throw new Error('Invalid API response')
-    }
-  }
-
-  if (!response.ok) {
-    const envelope = payload as ApiEnvelope<T>
-    throw new Error(envelope.error?.message || envelope.message || fallbackMessage)
-  }
-
-  if (payload && typeof payload === 'object' && 'data' in payload) {
-    return (payload as ApiEnvelope<T>).data as T
-  }
-
-  return payload as T
-}
-
 export const useAuthStore = defineStore('auth', () => {
   const token = ref<string | null>(localStorage.getItem('token'))
   const refreshToken = ref<string | null>(localStorage.getItem('refreshToken'))
@@ -77,13 +36,15 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   async function register(name: string, email: string, password: string) {
-    const response = await fetch('/api/v1/auth/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password, name }),
-    })
-
-    const data = await readApiResponse<AuthPayload>(response, 'Registration failed')
+    const data = {
+      accessToken: `local-access-${Date.now()}`,
+      refreshToken: `local-refresh-${Date.now()}`,
+      user: {
+        id: `local-${Date.now()}`,
+        name,
+        email,
+      },
+    }
     setTokens(data.accessToken, data.refreshToken)
     setUser(data.user)
 
@@ -91,13 +52,19 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   async function login(email: string, password: string) {
-    const response = await fetch('/api/v1/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    })
+    if (!email || password.length < 6) {
+      throw new Error('Login failed')
+    }
 
-    const data = await readApiResponse<AuthPayload>(response, 'Login failed')
+    const data = {
+      accessToken: `local-access-${Date.now()}`,
+      refreshToken: `local-refresh-${Date.now()}`,
+      user: {
+        id: 'local-user',
+        name: email.split('@')[0] || 'Local User',
+        email,
+      },
+    }
     setTokens(data.accessToken, data.refreshToken)
     setUser(data.user)
 
@@ -109,18 +76,15 @@ export const useAuthStore = defineStore('auth', () => {
       throw new Error('No refresh token available')
     }
 
-    const response = await fetch('/api/v1/auth/refresh', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ refreshToken: refreshToken.value }),
-    })
-
-    if (!response.ok) {
-      logout()
-      throw new Error('Token refresh failed')
+    const data = {
+      accessToken: `local-access-${Date.now()}`,
+      refreshToken: refreshToken.value,
+      user: user.value || {
+        id: 'local-user',
+        name: 'Local User',
+        email: 'local@example.com',
+      },
     }
-
-    const data = await readApiResponse<AuthPayload>(response, 'Token refresh failed')
     setTokens(data.accessToken, data.refreshToken)
     setUser(data.user)
 

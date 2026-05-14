@@ -1,25 +1,26 @@
 <template>
-  <div class="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+  <div data-ui="auth-page" class="min-h-screen bg-[var(--color-bg-page)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full space-y-8">
       <div>
-        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+        <h2 class="mt-6 text-center text-3xl font-extrabold text-[var(--color-fg-default)]">
           登录到写作平台
         </h2>
-        <p class="mt-2 text-center text-sm text-gray-600">
+        <p class="mt-2 text-center text-sm text-[var(--color-fg-muted)]">
           或
-          <router-link to="/register" class="font-medium text-primary-600 hover:text-primary-500">
+          <router-link to="/register" class="ui-link font-medium">
             创建新账号
           </router-link>
         </p>
       </div>
 
-      <n-card class="mt-8">
+      <section data-ui="auth-card" class="ui-surface mt-8 p-6">
         <n-form ref="formRef" :model="formValue" :rules="rules" size="large">
           <!-- Email -->
           <n-form-item label="邮箱" path="email">
             <n-input
               v-model:value="formValue.email"
               placeholder="your@email.com"
+              :input-props="{ autocomplete: 'email' }"
               @keydown.enter="handleLogin"
             />
           </n-form-item>
@@ -30,13 +31,19 @@
               v-model:value="formValue.password"
               type="password"
               placeholder="•••••••••"
+              :input-props="{ autocomplete: 'current-password' }"
               show-password-on="click"
               @keydown.enter="handleLogin"
             />
           </n-form-item>
 
           <!-- Error Message -->
-          <n-alert v-if="errorMessage" type="error" class="mb-4">
+          <n-alert
+            v-if="errorMessage"
+            type="error"
+            data-ui-state="error"
+            class="mb-4 border border-[var(--color-danger)]"
+          >
             {{ errorMessage }}
           </n-alert>
 
@@ -44,19 +51,20 @@
           <div class="flex items-center justify-between">
             <n-button
               type="primary"
+              data-ui="auth-submit"
               @click="handleLogin"
               :loading="loading"
               size="large"
-              class="flex-1"
+              class="ui-button-primary flex-1"
             >
               登录
             </n-button>
           </div>
         </n-form>
-      </n-card>
+      </section>
 
       <!-- Test Credentials Hint -->
-      <div class="mt-4 text-center text-sm text-gray-500">
+      <div class="mt-4 text-center text-sm text-[var(--color-fg-muted)]">
         <p>测试账号：test@example.com / password123</p>
       </div>
     </div>
@@ -66,7 +74,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useMessage } from 'naive-ui'
+import { NAlert, NButton, NForm, NFormItem, NInput, useMessage } from 'naive-ui'
 import { useAuthStore } from '../stores/auth'
 
 const router = useRouter()

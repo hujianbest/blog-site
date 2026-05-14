@@ -14,7 +14,7 @@
         <a
           :href="`#${heading.id}`"
           @click.prevent="scrollToHeading(heading.id)"
-          class="hover:text-blue-600 transition-colors"
+          class="hover:text-[var(--color-primary-text)] transition-colors"
         >
           {{ heading.text }}
         </a>
@@ -139,11 +139,11 @@ onUnmounted(() => {
 }
 
 .toc-item.active {
-  color: #2563eb;
+  color: var(--color-primary-text);
   font-weight: 600;
 }
 
 .toc-item.active a {
-  color: #2563eb;
+  color: var(--color-primary-text);
 }
 </style>

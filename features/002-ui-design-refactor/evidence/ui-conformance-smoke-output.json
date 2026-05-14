@@ -1,0 +1,374 @@
+{
+  "task": "TASK-UI-008",
+  "baseUrl": "http://127.0.0.1:8091",
+  "routes": [
+    "/",
+    "/articles",
+    "/categories",
+    "/categories/1",
+    "/tags/Vue.js",
+    "/articles/1",
+    "/about",
+    "/login",
+    "/register"
+  ],
+  "viewports": [
+    {
+      "name": "desktop",
+      "width": 1366,
+      "height": 768
+    },
+    {
+      "name": "mobile",
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "results": [
+    {
+      "route": "/",
+      "viewport": "desktop",
+      "checks": {
+        "app": true,
+        "main": true,
+        "hero": true,
+        "article": true,
+        "categoryTree": false,
+        "articleDetail": false,
+        "articleContent": false,
+        "authPage": false,
+        "authCard": false,
+        "authSubmit": false,
+        "noLiteralEscapedNewline": true,
+        "noForbiddenClass": true
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\final-smoke\\home-desktop.png"
+    },
+    {
+      "route": "/articles",
+      "viewport": "desktop",
+      "checks": {
+        "app": true,
+        "main": true,
+        "hero": false,
+        "article": true,
+        "categoryTree": false,
+        "articleDetail": false,
+        "articleContent": false,
+        "authPage": false,
+        "authCard": false,
+        "authSubmit": false,
+        "noLiteralEscapedNewline": true,
+        "noForbiddenClass": true
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\final-smoke\\articles-desktop.png"
+    },
+    {
+      "route": "/categories",
+      "viewport": "desktop",
+      "checks": {
+        "app": true,
+        "main": true,
+        "hero": false,
+        "article": false,
+        "categoryTree": true,
+        "articleDetail": false,
+        "articleContent": false,
+        "authPage": false,
+        "authCard": false,
+        "authSubmit": false,
+        "noLiteralEscapedNewline": true,
+        "noForbiddenClass": true
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\final-smoke\\categories-desktop.png"
+    },
+    {
+      "route": "/categories/1",
+      "viewport": "desktop",
+      "checks": {
+        "app": true,
+        "main": true,
+        "hero": false,
+        "article": true,
+        "categoryTree": false,
+        "articleDetail": false,
+        "articleContent": false,
+        "authPage": false,
+        "authCard": false,
+        "authSubmit": false,
+        "noLiteralEscapedNewline": true,
+        "noForbiddenClass": true
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\final-smoke\\category-detail-desktop.png"
+    },
+    {
+      "route": "/tags/Vue.js",
+      "viewport": "desktop",
+      "checks": {
+        "app": true,
+        "main": true,
+        "hero": false,
+        "article": true,
+        "categoryTree": false,
+        "articleDetail": false,
+        "articleContent": false,
+        "authPage": false,
+        "authCard": false,
+        "authSubmit": false,
+        "noLiteralEscapedNewline": true,
+        "noForbiddenClass": true
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\final-smoke\\tag-detail-desktop.png"
+    },
+    {
+      "route": "/articles/1",
+      "viewport": "desktop",
+      "checks": {
+        "app": true,
+        "main": true,
+        "hero": false,
+        "article": true,
+        "categoryTree": false,
+        "articleDetail": true,
+        "articleContent": true,
+        "authPage": false,
+        "authCard": false,
+        "authSubmit": false,
+        "noLiteralEscapedNewline": true,
+        "noForbiddenClass": true
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\final-smoke\\article-detail-desktop.png"
+    },
+    {
+      "route": "/about",
+      "viewport": "desktop",
+      "checks": {
+        "app": true,
+        "main": true,
+        "hero": false,
+        "article": false,
+        "categoryTree": false,
+        "articleDetail": false,
+        "articleContent": false,
+        "authPage": false,
+        "authCard": false,
+        "authSubmit": false,
+        "noLiteralEscapedNewline": true,
+        "noForbiddenClass": true
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\final-smoke\\about-desktop.png"
+    },
+    {
+      "route": "/login",
+      "viewport": "desktop",
+      "checks": {
+        "app": true,
+        "main": false,
+        "hero": false,
+        "article": false,
+        "categoryTree": false,
+        "articleDetail": false,
+        "articleContent": false,
+        "authPage": true,
+        "authCard": true,
+        "authSubmit": true,
+        "noLiteralEscapedNewline": true,
+        "noForbiddenClass": true
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\final-smoke\\login-desktop.png"
+    },
+    {
+      "route": "/register",
+      "viewport": "desktop",
+      "checks": {
+        "app": true,
+        "main": false,
+        "hero": false,
+        "article": false,
+        "categoryTree": false,
+        "articleDetail": false,
+        "articleContent": false,
+        "authPage": true,
+        "authCard": true,
+        "authSubmit": true,
+        "noLiteralEscapedNewline": true,
+        "noForbiddenClass": true
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\final-smoke\\register-desktop.png"
+    },
+    {
+      "route": "/",
+      "viewport": "mobile",
+      "checks": {
+        "app": true,
+        "main": true,
+        "hero": true,
+        "article": true,
+        "categoryTree": false,
+        "articleDetail": false,
+        "articleContent": false,
+        "authPage": false,
+        "authCard": false,
+        "authSubmit": false,
+        "noLiteralEscapedNewline": true,
+        "noForbiddenClass": true
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\final-smoke\\home-mobile.png"
+    },
+    {
+      "route": "/articles",
+      "viewport": "mobile",
+      "checks": {
+        "app": true,
+        "main": true,
+        "hero": false,
+        "article": true,
+        "categoryTree": false,
+        "articleDetail": false,
+        "articleContent": false,
+        "authPage": false,
+        "authCard": false,
+        "authSubmit": false,
+        "noLiteralEscapedNewline": true,
+        "noForbiddenClass": true
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\final-smoke\\articles-mobile.png"
+    },
+    {
+      "route": "/categories",
+      "viewport": "mobile",
+      "checks": {
+        "app": true,
+        "main": true,
+        "hero": false,
+        "article": false,
+        "categoryTree": true,
+        "articleDetail": false,
+        "articleContent": false,
+        "authPage": false,
+        "authCard": false,
+        "authSubmit": false,
+        "noLiteralEscapedNewline": true,
+        "noForbiddenClass": true
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\final-smoke\\categories-mobile.png"
+    },
+    {
+      "route": "/categories/1",
+      "viewport": "mobile",
+      "checks": {
+        "app": true,
+        "main": true,
+        "hero": false,
+        "article": true,
+        "categoryTree": false,
+        "articleDetail": false,
+        "articleContent": false,
+        "authPage": false,
+        "authCard": false,
+        "authSubmit": false,
+        "noLiteralEscapedNewline": true,
+        "noForbiddenClass": true
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\final-smoke\\category-detail-mobile.png"
+    },
+    {
+      "route": "/tags/Vue.js",
+      "viewport": "mobile",
+      "checks": {
+        "app": true,
+        "main": true,
+        "hero": false,
+        "article": true,
+        "categoryTree": false,
+        "articleDetail": false,
+        "articleContent": false,
+        "authPage": false,
+        "authCard": false,
+        "authSubmit": false,
+        "noLiteralEscapedNewline": true,
+        "noForbiddenClass": true
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\final-smoke\\tag-detail-mobile.png"
+    },
+    {
+      "route": "/articles/1",
+      "viewport": "mobile",
+      "checks": {
+        "app": true,
+        "main": true,
+        "hero": false,
+        "article": true,
+        "categoryTree": false,
+        "articleDetail": true,
+        "articleContent": true,
+        "authPage": false,
+        "authCard": false,
+        "authSubmit": false,
+        "noLiteralEscapedNewline": true,
+        "noForbiddenClass": true
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\final-smoke\\article-detail-mobile.png"
+    },
+    {
+      "route": "/about",
+      "viewport": "mobile",
+      "checks": {
+        "app": true,
+        "main": true,
+        "hero": false,
+        "article": false,
+        "categoryTree": false,
+        "articleDetail": false,
+        "articleContent": false,
+        "authPage": false,
+        "authCard": false,
+        "authSubmit": false,
+        "noLiteralEscapedNewline": true,
+        "noForbiddenClass": true
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\final-smoke\\about-mobile.png"
+    },
+    {
+      "route": "/login",
+      "viewport": "mobile",
+      "checks": {
+        "app": true,
+        "main": false,
+        "hero": false,
+        "article": false,
+        "categoryTree": false,
+        "articleDetail": false,
+        "articleContent": false,
+        "authPage": true,
+        "authCard": true,
+        "authSubmit": true,
+        "noLiteralEscapedNewline": true,
+        "noForbiddenClass": true
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\final-smoke\\login-mobile.png"
+    },
+    {
+      "route": "/register",
+      "viewport": "mobile",
+      "checks": {
+        "app": true,
+        "main": false,
+        "hero": false,
+        "article": false,
+        "categoryTree": false,
+        "articleDetail": false,
+        "articleContent": false,
+        "authPage": true,
+        "authCard": true,
+        "authSubmit": true,
+        "noLiteralEscapedNewline": true,
+        "noForbiddenClass": true
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\final-smoke\\register-mobile.png"
+    }
+  ],
+  "network": [],
+  "consoleMessages": [],
+  "issues": []
+}

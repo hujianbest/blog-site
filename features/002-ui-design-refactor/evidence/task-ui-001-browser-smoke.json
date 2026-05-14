@@ -1,0 +1,106 @@
+{
+  "task": "TASK-UI-001",
+  "claimBoundary": "Token foundation runtime availability only; route-level visual drift is deferred to TASK-UI-002 through TASK-UI-007.",
+  "baseUrl": "http://127.0.0.1:5176",
+  "results": [
+    {
+      "route": "/",
+      "viewport": "desktop",
+      "appTextLength": 443,
+      "anchors": {
+        "app": 1,
+        "body": 1,
+        "focusable": 11
+      },
+      "tokenState": {
+        "bgPage": "#fbf7ef",
+        "fgDefault": "#241c15",
+        "primaryBg": "#9f4f10",
+        "onPrimary": "#ffffff",
+        "primaryText": "#9f4f10",
+        "space16": "64px",
+        "bodyBackground": "rgb(251, 247, 239)",
+        "bodyColor": "rgb(36, 28, 21)"
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\task-ui-001-home-desktop.png"
+    },
+    {
+      "route": "/login",
+      "viewport": "desktop",
+      "appTextLength": 57,
+      "anchors": {
+        "app": 1,
+        "body": 1,
+        "focusable": 1
+      },
+      "tokenState": {
+        "bgPage": "#fbf7ef",
+        "fgDefault": "#241c15",
+        "primaryBg": "#9f4f10",
+        "onPrimary": "#ffffff",
+        "primaryText": "#9f4f10",
+        "space16": "64px",
+        "bodyBackground": "rgb(251, 247, 239)",
+        "bodyColor": "rgb(36, 28, 21)"
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\task-ui-001-login-desktop.png"
+    },
+    {
+      "route": "/",
+      "viewport": "mobile",
+      "appTextLength": 443,
+      "anchors": {
+        "app": 1,
+        "body": 1,
+        "focusable": 11
+      },
+      "tokenState": {
+        "bgPage": "#fbf7ef",
+        "fgDefault": "#241c15",
+        "primaryBg": "#9f4f10",
+        "onPrimary": "#ffffff",
+        "primaryText": "#9f4f10",
+        "space16": "64px",
+        "bodyBackground": "rgb(251, 247, 239)",
+        "bodyColor": "rgb(36, 28, 21)"
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\task-ui-001-home-mobile.png"
+    },
+    {
+      "route": "/login",
+      "viewport": "mobile",
+      "appTextLength": 57,
+      "anchors": {
+        "app": 1,
+        "body": 1,
+        "focusable": 1
+      },
+      "tokenState": {
+        "bgPage": "#fbf7ef",
+        "fgDefault": "#241c15",
+        "primaryBg": "#9f4f10",
+        "onPrimary": "#ffffff",
+        "primaryText": "#9f4f10",
+        "space16": "64px",
+        "bodyBackground": "rgb(251, 247, 239)",
+        "bodyColor": "rgb(36, 28, 21)"
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\task-ui-001-login-mobile.png"
+    }
+  ],
+  "network": [
+    {
+      "route": "/",
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:5176/api/v1/articles?status=PUBLISHED&limit=9",
+      "status": 200
+    },
+    {
+      "route": "/",
+      "viewport": "mobile",
+      "url": "http://127.0.0.1:5176/api/v1/articles?status=PUBLISHED&limit=9",
+      "status": 200
+    }
+  ],
+  "issues": []
+}

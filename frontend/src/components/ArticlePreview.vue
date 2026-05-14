@@ -1,7 +1,11 @@
 <template>
   <article
-    class="bg-white rounded-lg shadow hover:shadow-lg transition-shadow duration-200 overflow-hidden cursor-pointer"
+    class="bg-[var(--color-bg-surface)] border border-[var(--color-border-default)] rounded-[var(--radius-lg)] hover:border-[var(--color-border-strong)] hover:shadow-[var(--shadow-elevation-1)] transition-[border-color,box-shadow] duration-200 overflow-hidden cursor-pointer"
+    role="link"
+    tabindex="0"
     @click="handleClick"
+    @keydown.enter.prevent="handleClick"
+    @keydown.space.prevent="handleClick"
   >
     <!-- Article Image (optional) -->
     <div v-if="article.coverImage" class="aspect-video overflow-hidden">
@@ -14,17 +18,20 @@
 
     <div class="p-6">
       <!-- Article Title -->
-      <h2 class="text-xl font-semibold text-gray-900 mb-3 hover:text-blue-600 transition-colors">
+      <h2
+        data-ui="article-title"
+        class="text-xl font-semibold text-[var(--color-fg-default)] mb-3 hover:text-[var(--color-primary-text)] transition-colors"
+      >
         {{ article.title }}
       </h2>
 
       <!-- Article Excerpt -->
-      <p class="text-gray-600 mb-4 line-clamp-3">
+      <p data-ui="article-excerpt" class="text-[var(--color-fg-muted)] mb-4 line-clamp-3">
         {{ excerpt }}
       </p>
 
       <!-- Article Meta -->
-      <div class="flex flex-wrap items-center gap-4 text-sm text-gray-500">
+      <div data-ui="article-meta" class="flex flex-wrap items-center gap-4 text-sm text-[var(--color-fg-muted)]">
         <!-- Date -->
         <div class="flex items-center gap-1">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -46,7 +53,8 @@
           <span
             v-for="tag in article.tags.slice(0, 3)"
             :key="tag.id"
-            class="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs"
+            data-ui="article-tag"
+            class="px-2 py-1 bg-[var(--color-bg-accent-subtle)] text-[var(--color-primary-text)] rounded-[var(--radius-sm)] text-xs"
           >
             #{{ tag.name }}
           </span>
@@ -98,6 +106,7 @@ const articleDate = computed(() => props.article.publishedAt ?? props.article.cr
 const excerpt = computed(() => {
   const source = props.article.content ?? props.article.excerpt ?? ''
   const text = source
+    .replace(/\\n/g, '\n')
     .replace(/#{1,6}\s/g, '')
     .replace(/\*\*/g, '')
     .replace(/\*/g, '')

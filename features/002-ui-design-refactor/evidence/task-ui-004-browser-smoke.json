@@ -1,0 +1,241 @@
+{
+  "task": "TASK-UI-004",
+  "baseUrl": "http://127.0.0.1:5176",
+  "results": [
+    {
+      "route": "/",
+      "viewport": "desktop",
+      "checks": {
+        "app": 1,
+        "main": 1,
+        "articleCount": 2,
+        "articleSurface": true,
+        "articleNoWhiteShadow": true,
+        "categoryTree": 0,
+        "tagCloud": 0,
+        "emptyState": 0,
+        "loadingState": 0
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\task-ui-004-home-desktop.png"
+    },
+    {
+      "route": "/articles",
+      "viewport": "desktop",
+      "checks": {
+        "app": 1,
+        "main": 1,
+        "articleCount": 2,
+        "articleSurface": true,
+        "articleNoWhiteShadow": true,
+        "categoryTree": 0,
+        "tagCloud": 0,
+        "emptyState": 0,
+        "loadingState": 0
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\task-ui-004-articles-desktop.png"
+    },
+    {
+      "route": "/categories",
+      "viewport": "desktop",
+      "checks": {
+        "app": 1,
+        "main": 1,
+        "articleCount": 0,
+        "articleSurface": true,
+        "articleNoWhiteShadow": true,
+        "categoryTree": 1,
+        "tagCloud": 0,
+        "emptyState": 0,
+        "loadingState": 0
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\task-ui-004-categories-desktop.png"
+    },
+    {
+      "route": "/categories/1",
+      "viewport": "desktop",
+      "checks": {
+        "app": 1,
+        "main": 1,
+        "articleCount": 2,
+        "articleSurface": true,
+        "articleNoWhiteShadow": true,
+        "categoryTree": 0,
+        "tagCloud": 0,
+        "emptyState": 0,
+        "loadingState": 0
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\task-ui-004-category-detail-desktop.png"
+    },
+    {
+      "route": "/tags/Vue.js",
+      "viewport": "desktop",
+      "checks": {
+        "app": 1,
+        "main": 1,
+        "articleCount": 1,
+        "articleSurface": true,
+        "articleNoWhiteShadow": true,
+        "categoryTree": 0,
+        "tagCloud": 0,
+        "emptyState": 0,
+        "loadingState": 0
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\task-ui-004-tag-detail-desktop.png"
+    },
+    {
+      "route": "/",
+      "viewport": "mobile",
+      "checks": {
+        "app": 1,
+        "main": 1,
+        "articleCount": 2,
+        "articleSurface": true,
+        "articleNoWhiteShadow": true,
+        "categoryTree": 0,
+        "tagCloud": 0,
+        "emptyState": 0,
+        "loadingState": 0
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\task-ui-004-home-mobile.png"
+    },
+    {
+      "route": "/articles",
+      "viewport": "mobile",
+      "checks": {
+        "app": 1,
+        "main": 1,
+        "articleCount": 2,
+        "articleSurface": true,
+        "articleNoWhiteShadow": true,
+        "categoryTree": 0,
+        "tagCloud": 0,
+        "emptyState": 0,
+        "loadingState": 0
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\task-ui-004-articles-mobile.png"
+    },
+    {
+      "route": "/categories",
+      "viewport": "mobile",
+      "checks": {
+        "app": 1,
+        "main": 1,
+        "articleCount": 0,
+        "articleSurface": true,
+        "articleNoWhiteShadow": true,
+        "categoryTree": 1,
+        "tagCloud": 0,
+        "emptyState": 0,
+        "loadingState": 0
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\task-ui-004-categories-mobile.png"
+    },
+    {
+      "route": "/categories/1",
+      "viewport": "mobile",
+      "checks": {
+        "app": 1,
+        "main": 1,
+        "articleCount": 2,
+        "articleSurface": true,
+        "articleNoWhiteShadow": true,
+        "categoryTree": 0,
+        "tagCloud": 0,
+        "emptyState": 0,
+        "loadingState": 0
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\task-ui-004-category-detail-mobile.png"
+    },
+    {
+      "route": "/tags/Vue.js",
+      "viewport": "mobile",
+      "checks": {
+        "app": 1,
+        "main": 1,
+        "articleCount": 1,
+        "articleSurface": true,
+        "articleNoWhiteShadow": true,
+        "categoryTree": 0,
+        "tagCloud": 0,
+        "emptyState": 0,
+        "loadingState": 0
+      },
+      "screenshot": "D:\\workspace\\blog-site\\features\\002-ui-design-refactor\\evidence\\task-ui-004-tag-detail-mobile.png"
+    }
+  ],
+  "network": [
+    {
+      "route": "/",
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:5176/api/v1/articles?status=PUBLISHED&limit=9",
+      "status": 200
+    },
+    {
+      "route": "/articles",
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:5176/api/v1/articles?status=PUBLISHED",
+      "status": 200
+    },
+    {
+      "route": "/categories",
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:5176/api/v1/categories",
+      "status": 200
+    },
+    {
+      "route": "/categories/1",
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:5176/api/v1/categories/1",
+      "status": 200
+    },
+    {
+      "route": "/categories/1",
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:5176/api/v1/categories/1/articles",
+      "status": 200
+    },
+    {
+      "route": "/tags/Vue.js",
+      "viewport": "desktop",
+      "url": "http://127.0.0.1:5176/api/v1/tags/Vue.js/articles",
+      "status": 200
+    },
+    {
+      "route": "/",
+      "viewport": "mobile",
+      "url": "http://127.0.0.1:5176/api/v1/articles?status=PUBLISHED&limit=9",
+      "status": 200
+    },
+    {
+      "route": "/articles",
+      "viewport": "mobile",
+      "url": "http://127.0.0.1:5176/api/v1/articles?status=PUBLISHED",
+      "status": 200
+    },
+    {
+      "route": "/categories",
+      "viewport": "mobile",
+      "url": "http://127.0.0.1:5176/api/v1/categories",
+      "status": 200
+    },
+    {
+      "route": "/categories/1",
+      "viewport": "mobile",
+      "url": "http://127.0.0.1:5176/api/v1/categories/1",
+      "status": 200
+    },
+    {
+      "route": "/categories/1",
+      "viewport": "mobile",
+      "url": "http://127.0.0.1:5176/api/v1/categories/1/articles",
+      "status": 200
+    },
+    {
+      "route": "/tags/Vue.js",
+      "viewport": "mobile",
+      "url": "http://127.0.0.1:5176/api/v1/tags/Vue.js/articles",
+      "status": 200
+    }
+  ],
+  "issues": []
+}

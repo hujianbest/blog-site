@@ -1,31 +1,34 @@
 <template>
-  <div class="min-h-screen flex flex-col bg-gray-50">
+  <div class="min-h-screen flex flex-col bg-[var(--color-bg-page)]">
     <Header />
 
-    <main class="py-16 flex-1">
-      <div class="container mx-auto px-4">
+    <main id="main-content" class="py-16 flex-1">
+      <div class="ui-page">
         <div class="max-w-4xl mx-auto">
           <!-- Header Section -->
-          <div class="bg-white rounded-lg shadow-lg p-8 md:p-12 mb-8">
+          <div class="ui-surface p-8 md:p-12 mb-8">
             <div class="flex flex-col md:flex-row gap-8 items-center md:items-start">
               <!-- Avatar -->
               <div class="flex-shrink-0">
-                <div class="w-32 h-32 md:w-48 md:h-48 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-4xl md:text-6xl font-bold">
+                <div
+                  data-ui="about-avatar"
+                  class="w-32 h-32 md:w-48 md:h-48 rounded-full bg-[var(--color-bg-accent-subtle)] border border-[var(--color-border-default)] flex items-center justify-center text-[var(--color-primary-text)] text-4xl md:text-6xl font-bold"
+                >
                   MB
                 </div>
               </div>
 
               <!-- Bio -->
               <div class="flex-1 text-center md:text-left">
-                <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                <h1 class="text-3xl md:text-4xl font-bold text-[var(--color-fg-default)] mb-4">
                   关于我
                 </h1>
-                <p class="text-lg text-gray-600 mb-6">
-                  全栈开发者 / 技术博主 / 开源爱好者
+                <p class="text-lg text-[var(--color-fg-muted)] mb-6">
+                  全栈开发者 / 工程实践记录者 / 长期思考写作者
                 </p>
-                <p class="text-gray-700 leading-relaxed">
-                  热爱编程，享受创造的过程。专注于 Web 开发，喜欢探索新技术。
-                  这个博客是我记录学习心得、分享技术思考的地方。希望我的文章能对你有所帮助。
+                <p class="text-[var(--color-fg-default)] leading-relaxed">
+                  我在这里记录工程实践、产品判断和个人知识系统的长期变化。
+                  这些文章尽量保留上下文、限制条件和证据，而不是只留下结论。
                 </p>
 
                 <!-- Social Links -->
@@ -34,7 +37,7 @@
                     href="https://github.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="p-3 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors"
+                    class="p-3 bg-[var(--color-bg-accent-subtle)] rounded-full hover:text-[var(--color-primary-text)] transition-colors"
                     aria-label="GitHub"
                   >
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -45,7 +48,7 @@
                     href="https://twitter.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="p-3 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors"
+                    class="p-3 bg-[var(--color-bg-accent-subtle)] rounded-full hover:text-[var(--color-primary-text)] transition-colors"
                     aria-label="Twitter"
                   >
                     <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -54,7 +57,7 @@
                   </a>
                   <a
                     href="mailto:hello@example.com"
-                    class="p-3 bg-gray-100 rounded-full hover:bg-gray-200 transition-colors"
+                    class="p-3 bg-[var(--color-bg-accent-subtle)] rounded-full hover:text-[var(--color-primary-text)] transition-colors"
                     aria-label="Email"
                   >
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -66,74 +69,66 @@
             </div>
           </div>
 
-          <!-- Skills Section -->
-          <div class="bg-white rounded-lg shadow-lg p-8 md:p-12">
-            <h2 class="text-2xl font-bold text-gray-900 mb-6">技能栈</h2>
+          <!-- Editorial Topics Section -->
+          <div class="ui-surface p-8 md:p-12">
+            <h2 class="text-2xl font-bold text-[var(--color-fg-default)] mb-6">写作主题</h2>
+            <p class="text-[var(--color-fg-muted)] leading-relaxed mb-8">
+              这里不会列一个泛化的工具清单。我更关心技术如何长期影响工作方式：
+              从工程实践、产品判断到个人知识系统，记录那些可以反复使用的经验。
+            </p>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
               <!-- Frontend -->
               <div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                  <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <h3 class="text-lg font-semibold text-[var(--color-fg-default)] mb-4 flex items-center gap-2">
+                  <svg class="w-5 h-5 text-[var(--color-primary-text)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
-                  前端开发
+                  工程实践
                 </h3>
-                <div class="flex flex-wrap gap-2">
-                  <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">Vue.js</span>
-                  <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">React</span>
-                  <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">TypeScript</span>
-                  <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">Tailwind CSS</span>
-                  <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">Vite</span>
-                </div>
+                <p class="text-[var(--color-fg-muted)] leading-relaxed">
+                  记录前端、后端和自动化流程中的取舍：怎样让代码可维护，怎样让工具真正服务写作。
+                </p>
               </div>
 
               <!-- Backend -->
               <div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                  <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <h3 class="text-lg font-semibold text-[var(--color-fg-default)] mb-4 flex items-center gap-2">
+                  <svg class="w-5 h-5 text-[var(--color-success)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
                   </svg>
-                  后端开发
+                  长期思考
                 </h3>
-                <div class="flex flex-wrap gap-2">
-                  <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">Node.js</span>
-                  <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">Spring Boot</span>
-                  <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">PostgreSQL</span>
-                  <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">RESTful API</span>
-                </div>
+                <p class="text-[var(--color-fg-muted)] leading-relaxed">
+                  把阶段性的项目经验沉淀成可回读的笔记，关注复杂系统、协作流程和个人成长。
+                </p>
               </div>
 
               <!-- Tools -->
               <div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                  <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <h3 class="text-lg font-semibold text-[var(--color-fg-default)] mb-4 flex items-center gap-2">
+                  <svg class="w-5 h-5 text-[var(--color-info)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
-                  开发工具
+                  产品与工具
                 </h3>
-                <div class="flex flex-wrap gap-2">
-                  <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm">Git</span>
-                  <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm">Docker</span>
-                  <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm">VS Code</span>
-                  <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm">Linux</span>
-                </div>
+                <p class="text-[var(--color-fg-muted)] leading-relaxed">
+                  关注工具背后的工作流设计，尤其是如何把想法转成可以持续交付的系统。
+                </p>
               </div>
 
               <!-- Other -->
               <div>
-                <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                  <svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <h3 class="text-lg font-semibold text-[var(--color-fg-default)] mb-4 flex items-center gap-2">
+                  <svg class="w-5 h-5 text-[var(--color-primary-text)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332-.477 4.5-1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332-.477-4.5-1.253" />
                   </svg>
-                  其他
+                  写作方法
                 </h3>
-                <div class="flex flex-wrap gap-2">
-                  <span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm">Agile</span>
-                  <span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm">TDD</span>
-                  <span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm">CI/CD</span>
-                </div>
+                <p class="text-[var(--color-fg-muted)] leading-relaxed">
+                  少写口号，多写证据。每篇文章尽量保留上下文、限制条件和当时的判断依据。
+                </p>
               </div>
             </div>
           </div>
@@ -154,8 +149,8 @@ import { setMetaTags } from '@/utils/seo'
 onMounted(() => {
   // SEO Meta Tags
   setMetaTags({
-    title: '关于我 - My Blog',
-    description: '全栈开发者 / 技术博主 / 开源爱好者。热爱编程，享受创造的过程。专注于 Web 开发，喜欢探索新技术。',
+    title: "关于我 - hujian's bolg",
+    description: '记录工程实践、产品判断和个人知识系统的长期变化。保留上下文、限制条件和证据，而不是只留下结论。',
     ogType: 'website',
     twitterCard: 'summary'
   })

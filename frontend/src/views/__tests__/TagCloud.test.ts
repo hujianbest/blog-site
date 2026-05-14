@@ -40,6 +40,7 @@ describe('TagCloud.vue', () => {
 
     expect(wrapper.vm.loading).toBe(true)
     expect(wrapper.find('.animate-spin').exists()).toBe(true)
+    expect(wrapper.find('[data-ui-state="loading"]').exists()).toBe(true)
   })
 
   it('should load tags on mount', async () => {
@@ -75,6 +76,7 @@ describe('TagCloud.vue', () => {
     await wrapper.vm.$nextTick()
 
     expect(wrapper.text()).toContain('暂无标签')
+    expect(wrapper.find('[data-ui-state="empty"]').exists()).toBe(true)
   })
 
   it('should sort tags by article count', async () => {
@@ -139,5 +141,6 @@ describe('TagCloud.vue', () => {
 
     expect(wrapper.text()).toContain('Vue')
     expect(wrapper.text()).toContain('15')
+    expect(wrapper.find('[data-ui="tag-cloud"]').classes()).toContain('bg-[var(--color-bg-surface)]')
   })
 })

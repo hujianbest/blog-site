@@ -1,31 +1,36 @@
 <template>
-  <footer class="bg-gray-900 text-white mt-auto">
-    <div class="container mx-auto px-4 py-8">
+  <footer class="bg-[var(--color-bg-surface)] text-[var(--color-fg-muted)] border-t border-[var(--color-border-default)] mt-auto">
+    <div class="ui-page py-8">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <!-- About -->
         <div>
-          <h3 class="text-lg font-semibold mb-4">关于</h3>
-          <p class="text-gray-400 text-sm">
+          <h3 class="text-lg font-semibold text-[var(--color-fg-default)] mb-4">关于</h3>
+          <p class="text-sm">
             一个简洁的个人写作网站，记录技术思考与生活点滴。
           </p>
         </div>
 
         <!-- Quick Links -->
         <div>
-          <h3 class="text-lg font-semibold mb-4">快速链接</h3>
+          <h3 class="text-lg font-semibold text-[var(--color-fg-default)] mb-4">快速链接</h3>
           <ul class="space-y-2 text-sm">
             <li>
-              <router-link to="/" class="text-gray-400 hover:text-white transition-colors">
+              <router-link to="/" class="hover:text-[var(--color-primary-text)] transition-colors">
                 首页
               </router-link>
             </li>
             <li>
-              <router-link to="/articles" class="text-gray-400 hover:text-white transition-colors">
+              <router-link to="/articles" class="hover:text-[var(--color-primary-text)] transition-colors">
                 文章
               </router-link>
             </li>
             <li>
-              <router-link to="/about" class="text-gray-400 hover:text-white transition-colors">
+              <router-link to="/categories" class="hover:text-[var(--color-primary-text)] transition-colors">
+                分类
+              </router-link>
+            </li>
+            <li>
+              <router-link to="/about" class="hover:text-[var(--color-primary-text)] transition-colors">
                 关于
               </router-link>
             </li>
@@ -34,13 +39,13 @@
 
         <!-- Social Links -->
         <div>
-          <h3 class="text-lg font-semibold mb-4">社交链接</h3>
+          <h3 class="text-lg font-semibold text-[var(--color-fg-default)] mb-4">社交链接</h3>
           <div class="flex space-x-4">
             <a
               href="https://github.com"
               target="_blank"
               rel="noopener noreferrer"
-              class="text-gray-400 hover:text-white transition-colors"
+              class="hover:text-[var(--color-primary-text)] transition-colors"
               aria-label="GitHub"
             >
               <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -51,7 +56,7 @@
               href="https://twitter.com"
               target="_blank"
               rel="noopener noreferrer"
-              class="text-gray-400 hover:text-white transition-colors"
+              class="hover:text-[var(--color-primary-text)] transition-colors"
               aria-label="Twitter"
             >
               <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -63,8 +68,8 @@
       </div>
 
       <!-- Copyright -->
-      <div class="mt-8 pt-8 border-t border-gray-800 text-center text-sm text-gray-400">
-        <p>&copy; {{ currentYear }} My Blog. All rights reserved.</p>
+      <div class="mt-8 pt-8 border-t border-[var(--color-border-default)] text-center text-sm">
+        <p>&copy; {{ currentYear }} hujian's bolg. All rights reserved.</p>
       </div>
     </div>
   </footer>
